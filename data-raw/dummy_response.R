@@ -17,10 +17,11 @@ age <- c("16-17 years old", "18-19 years old", "20-24 years old", "25-29 years o
 ethnicity <- c("White", "Mixed/Multiple ethnicities", "Asian/Asian British",
                "Black/African/Caribbean/Black British", "Other ethnic group", "")
 contact <- c("Yes", "No", "")
-themes <- c("TopicA,TopicB ,Topic C , Topic D, Topic E",
-            "TopicA , Topic B, TopicC",
-            "Topic A, TopicB",
-            "Topic A, Topic B, TopicD , TopicE")
+
+# For multi-select categorical questions, we will randomly combine from a topic list
+theme_opts <- c("TopicA", "Topic B", "TopicC ", "Topic D ", " Topic E")
+selection_length <- round(runif(rows, min = 0, max = length(themes)))
+themes <- sapply(selection_length, FUN = function(x) paste(sample(theme_opts, size = x, replace = FALSE), collapse = ","))
 
 # For free text, we will reshuffle the words from lorem ipsum
 # This results in unusual capitalisation and punctuation, too.
@@ -36,7 +37,7 @@ dummy_response <- data.frame(respond = sample(respond, size = rows, replace = TR
                          age = sample(age, size = rows, replace = TRUE),
                          ethnicity = sample(ethnicity, size = rows, replace = TRUE),
                          contact = sample(contact, size = rows, replace = TRUE),
-                         themes = sample(themes, size = rows, replace = TRUE),
+                         themes = themes,
                          free_text = free_text)
 # Set interpretable column names
 colnames(dummy_response) <- c("Are you completing this consultation as:",
