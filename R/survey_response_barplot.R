@@ -7,7 +7,7 @@
 #' @return A ggplot2 object
 #' @export
 #'
-#' @examples survey_response_barplot(survey_response)
+#' @examples survey_response_barplot(Hmisc::describe(dummy_response))
 survey_response_barplot <- purrr::safely(function(survey_response){
   survey_barplot <- survey_response[[1]]$result %>%
     ggplot2::ggplot(ggplot2::aes(x = Response, y = Frequency, fill = Response))+

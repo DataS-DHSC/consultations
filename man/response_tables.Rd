@@ -7,7 +7,7 @@
 response_tables(...)
 }
 \arguments{
-\item{survey_response}{list}
+\item{survey_response}{list produced by Hmisc::describe}
 }
 \value{
 tibble
@@ -16,5 +16,5 @@ tibble
 Take a consultation response spreadsheet (as transformed by Hmisc::describe), and turn it into a neat tibble of values and frequencies.
 }
 \examples{
-response_tables(survey_response)
+purrr::map(Hmisc::describe(dummy_response), response_tables)
 }

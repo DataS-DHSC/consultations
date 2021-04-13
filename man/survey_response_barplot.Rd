@@ -16,5 +16,5 @@ A ggplot2 object
 Take a consultation response spreadsheet (as transformed by Hmisc::describe), and turn it into a barplot.
 }
 \examples{
-survey_response_barplot(survey_response)
+survey_response_barplot(Hmisc::describe(dummy_response))
 }

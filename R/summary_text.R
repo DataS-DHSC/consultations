@@ -7,10 +7,10 @@
 #' @return string
 #' @export
 #'
-#' @examples summary_text(survey_response)
+#' @examples summary_text(Hmisc::describe(dummy_response))
 summary_text <- function(survey_response){
   survey_response %>%
-    glue::glue_data('* There were {n_distinct(Response)} response categories ({paste(unique(Response), collapse=", ")}).
+    glue::glue_data('* There were {dplyr::n_distinct(Response)} response categories ({paste(unique(Response), collapse=", ")}).
                     * The category with the highest number of responses was "{slice(., which.max(Frequency)) %>% pull(Response)}" with {slice(., which.max(Frequency)) %>% pull(Frequency)} responses ({slice(.which.max(Frequency %>% pull(Percentage)}%).
                     * The category with the lowest number of responses was "{slice(., which.min(Frequency)) %>% pull(Response)}" with {slice(., which.min(Frequency)) %>% pull(Frequency)} responses ({slice(which.min(Frequency %>% pull(Percentage)}%).')
 }

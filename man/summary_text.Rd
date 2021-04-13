@@ -16,5 +16,5 @@ string
 Take a consultation response spreadsheet (as transformed by Hmisc::describe), and summarise the responses as three-bullet text.
 }
 \examples{
-summary_text(survey_response)
+summary_text(Hmisc::describe(dummy_response))
 }

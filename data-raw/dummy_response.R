@@ -3,6 +3,10 @@
 # The data is entirely random, but has columns that are similar to the types of columns we would see in consultations.
 # The dummy answers should not be seen as exhaustive lists of responses available in real consultations.
 
+
+# Set size of dummy_response dataset
+rows <- 100
+
 # Lists of response options
 respond <- c("an individual", "an organisation", "")
 location <- c("England", "Northern Ireland", "Scotland",
@@ -17,13 +21,14 @@ themes <- c("TopicA,TopicB ,Topic C , Topic D, Topic E",
             "TopicA , Topic B, TopicC",
             "Topic A, TopicB",
             "Topic A, Topic B, TopicD , TopicE")
-free_text <- c(paste0(stringi::stri_rand_lipsum(2, start_lipsum= FALSE), collapse = " "),
-               paste0(stringi::stri_rand_lipsum(4, start_lipsum= FALSE), collapse = " "),
-               paste0(stringi::stri_rand_lipsum(6, start_lipsum= FALSE), collapse = " "),
-               "")
 
-# Set size of dummy_response dataset
-rows <- 100
+# For free text, we will reshuffle the words from lorem ipsum
+# This results in unusual capitalisation and punctuation, too.
+words <- unlist(strsplit(paste0(stringi::stri_rand_lipsum(6, start_lipsum= FALSE), collapse = " "), split = " "))
+text_length <- round(runif(rows, min = 0, max = 150), 0)
+free_text <- sapply(text_length, FUN = function(x) paste(sample(words, size = x, replace = TRUE), collapse = " "))
+
+
 
 # Randomly sample from each list to populate the columns
 dummy_response <- data.frame(respond = sample(respond, size = rows, replace = TRUE),
@@ -32,7 +37,7 @@ dummy_response <- data.frame(respond = sample(respond, size = rows, replace = TR
                          ethnicity = sample(ethnicity, size = rows, replace = TRUE),
                          contact = sample(contact, size = rows, replace = TRUE),
                          themes = sample(themes, size = rows, replace = TRUE),
-                         free_text = sample(free_text, size = rows, replace = TRUE))
+                         free_text = free_text)
 # Set interpretable column names
 colnames(dummy_response) <- c("Are you completing this consultation as:",
                           "Where are you based?",
