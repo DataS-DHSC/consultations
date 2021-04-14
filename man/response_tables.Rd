@@ -8,6 +8,10 @@ response_tables(dummy_response, qtypes, min_n = 5)
 }
 \arguments{
 \item{dummy_response}{dataframe}
+
+\item{qtypes}{list with elements categorical, multichoice, and freetext containing vectors of column names}
+
+\item{min_n}{smallest group of answers allowed (statistical disclosure limit)}
 }
 \value{
 list of tibbles

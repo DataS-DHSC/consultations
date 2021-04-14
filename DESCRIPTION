@@ -18,10 +18,7 @@ Imports:
     ggplot2,
     ggthemes,
     glue,
-    Hmisc,
     magrittr,
-    purrr,
-    readxl,
     tibble,
     tidyr
 Suggests: 
