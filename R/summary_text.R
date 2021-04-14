@@ -1,16 +1,23 @@
 #' Summarise categorical responses as text
 #'
-#' Take a consultation response spreadsheet (as transformed by Hmisc::describe), and summarise the responses as three-bullet text.
+#' Take a question frequency table (as produced by response_tables), and summarise the responses as three-bullet text.
+#' Requires the frequency table to have 'Response', 'Frequency', and 'Percentage' columns.
+#' To apply to the full output of response_tables, use lapply.
 #'
 #' @param survey_response list
 #'
-#' @return string
+#' @return glue string
 #' @export
 #'
-#' @examples summary_text(Hmisc::describe(dummy_response))
+#' @examples lapply(response_tables(dummy_response, qtypes = question_types(dummy_response)), summary_text)
 summary_text <- function(survey_response){
-  survey_response %>%
-    glue::glue_data('* There were {dplyr::n_distinct(Response)} response categories ({paste(unique(Response), collapse=", ")}).
-                    * The category with the highest number of responses was "{slice(., which.max(Frequency)) %>% pull(Response)}" with {slice(., which.max(Frequency)) %>% pull(Frequency)} responses ({slice(.which.max(Frequency %>% pull(Percentage)}%).
-                    * The category with the lowest number of responses was "{slice(., which.min(Frequency)) %>% pull(Response)}" with {slice(., which.min(Frequency)) %>% pull(Frequency)} responses ({slice(which.min(Frequency %>% pull(Percentage)}%).')
+  # Get the largest and smallest category
+  max_cat <- dplyr::slice(survey_response, which.max(Frequency))
+  min_cat <- dplyr::slice(survey_response, which.min(Frequency))
+
+  # Generate the bullet point text
+  text <- glue::glue('* There were {dplyr::n_distinct(survey_response$Response)} response categories ({paste(unique(survey_response$Response), collapse=", ")}).
+  * The category with the highest number of responses was "{max_cat$Response}" with {max_cat$Frequency} responses ({max_cat$Percentage}%).
+  * The category with the lowest number of responses was "{min_cat$Response}" with {min_cat$Frequency} responses ({min_cat$Percentage}%).')
+  return(text)
 }

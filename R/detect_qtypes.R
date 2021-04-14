@@ -4,7 +4,17 @@
 #' is most likely. This is based on rules of thumb and can be tuned for different
 #' uses using the calculation criteria.
 #'
+#' Calculation criteria can be set by the user:
+#' `unique_vals`: what's the maximum number of unique values a column can have, to always consider it categorical?
+#' `split_perc`: determines which questions are deemed multi-choice: if the answers are split by comma, how much fewer unique values should that column have than before splitting? Helps distinguish between free-text and multi-choice.
+#' `prop_total`: if the 5 most common values account for this proportion of the total number of answers, consider it categorical
+#' `prop_common`: if the most common response is at most this proportion of the total, consider it free text
+#'
 #' @param response_col column from response dataframe
+#' @param unique_vals integer
+#' @param split_perc float
+#' @param prop_total float
+#' @param prop_common float
 #'
 #' @return a string value
 #' @export

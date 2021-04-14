@@ -14,6 +14,14 @@ detect_qtypes(
 }
 \arguments{
 \item{response_col}{column from response dataframe}
+
+\item{unique_vals}{integer}
+
+\item{split_perc}{float}
+
+\item{prop_total}{float}
+
+\item{prop_common}{float}
 }
 \value{
 a string value
@@ -22,6 +30,13 @@ a string value
 Looks at the possible answers in a column, and determines which type of question
 is most likely. This is based on rules of thumb and can be tuned for different
 uses using the calculation criteria.
+}
+\details{
+Calculation criteria can be set by the user:
+\code{unique_vals}: what's the maximum number of unique values a column can have, to always consider it categorical?
+\code{split_perc}: determines which questions are deemed multi-choice: if the answers are split by comma, how much fewer unique values should that column have than before splitting? Helps distinguish between free-text and multi-choice.
+\code{prop_total}: if the 5 most common values account for this proportion of the total number of answers, consider it categorical
+\code{prop_common}: if the most common response is at most this proportion of the total, consider it free text
 }
 \examples{
 apply(dummy_response, 2, detect_qtypes)

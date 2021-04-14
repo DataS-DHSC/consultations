@@ -10,11 +10,13 @@ summary_text(survey_response)
 \item{survey_response}{list}
 }
 \value{
-string
+glue string
 }
 \description{
-Take a consultation response spreadsheet (as transformed by Hmisc::describe), and summarise the responses as three-bullet text.
+Take a question frequency table (as produced by response_tables), and summarise the responses as three-bullet text.
+Requires the frequency table to have 'Response', 'Frequency', and 'Percentage' columns.
+To apply to the full output of response_tables, use lapply.
 }
 \examples{
-summary_text(Hmisc::describe(dummy_response))
+lapply(response_tables(dummy_response, qtypes = question_types(dummy_response)), summary_text)
 }

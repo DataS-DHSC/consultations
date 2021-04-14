@@ -2,7 +2,7 @@
 #'
 #' Returns a list containing vectors with column names for categorical, multi-choice, and free text questions.
 #'
-#' @param dummy_response
+#' @param dummy_response dataframe
 #'
 #' @return three-element list
 #' @export

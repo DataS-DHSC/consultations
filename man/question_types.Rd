@@ -7,7 +7,7 @@
 question_types(dummy_response)
 }
 \arguments{
-\item{dummy_response}{}
+\item{dummy_response}{dataframe}
 }
 \value{
 three-element list
