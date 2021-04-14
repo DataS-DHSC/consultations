@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>consultations package example</title>
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">consultations package example</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(consultations)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">data</span>(dummy_response, <span class="dt">package =</span> <span class="st">&quot;consultations&quot;</span>)</a></code></pre></div>
+<p>This package comes with some generated dummy data. This contains a few categorical columns, one column representing a multi-choice tickbox question, and one column with randomly generated free text.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(dummy_response[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,])</a></code></pre></div>
+<table>
+<colgroup>
+<col width="3%"></col>
+<col width="1%"></col>
+<col width="1%"></col>
+<col width="2%"></col>
+<col width="4%"></col>
+<col width="5%"></col>
+<col width="80%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Are you completing this consultation as:</th>
+<th align="left">Where are you based?</th>
+<th align="left">What is your age?</th>
+<th align="left">What is your ethnicity?</th>
+<th align="left">May we contact you via email about your response?</th>
+<th align="left">Which themes would you like to share your responses about?</th>
+<th align="left">Please share your views on these themes:</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">an organisation</td>
+<td align="left">Northern Ireland</td>
+<td align="left">50-59 years old</td>
+<td align="left">Other ethnic group</td>
+<td align="left">No</td>
+<td align="left">Topic D ,TopicC ,TopicA</td>
+<td align="left">sed orci. eget. lacinia aliquam. praesent. risus eget erat sed. nascetur Metus amet dolor turpis. donec. sed odio malesuada praesent. eu. sapien. posuere. sodales consectetur sed nisl in fermentum, risus eget sed amet arcu pharetra enim adipiscing Odio quisque sed viverra etiam eu amet, quam. molestie, imperdiet donec tellus. arcu sed ridiculus velit eros eu. accumsan platea ac donec Ligula enim. Id phasellus donec class nunc, donec et risus malesuada nisl eu. Eget et habitant ut eu. justo pretium suspendisse, Quis ut. diam, lacinia viverra ullamcorper erat potenti amet sapien nibh, at id euismod ornare Volutpat ac consequat vitae. purus enim est etiam ac risus tempus sodales. aliquam accumsan ac diam dui porta ac sapien hac ut. iaculis. tellus. vestibulum id adipiscing pharetra potenti orci sit, metus. etiam eget dui donec inceptos sed quis. Ipsum, hac nulla. in arcu senectus dolor non tristique eu</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">40-49 years old</td>
+<td align="left">White</td>
+<td align="left"></td>
+<td align="left">Topic B, Topic E</td>
+<td align="left">Ligula enim Mi sed penatibus. condimentum. class, eu per ligula, Sit quam at varius, amet proin, Volutpat, sodales. lacinia sed. Non fringilla arcu. vestibulum</td>
+</tr>
+<tr class="odd">
+<td align="left">an organisation</td>
+<td align="left">England</td>
+<td align="left">25-29 years old</td>
+<td align="left">Other ethnic group</td>
+<td align="left">No</td>
+<td align="left">TopicC , Topic E,Topic B</td>
+<td align="left">libero malesuada maecenas sapien ac ac risus duis diam. proin ante tellus in. velit</td>
+</tr>
+<tr class="even">
+<td align="left">an individual</td>
+<td align="left"></td>
+<td align="left">16-17 years old</td>
+<td align="left">Other ethnic group</td>
+<td align="left"></td>
+<td align="left">Topic D ,TopicC ,Topic B</td>
+<td align="left">malesuada justo id, sed lorem. tristique et Vel ridiculus a at. massa. auctor Id sed ut elementum ac sed. Pulvinar et scelerisque In non felis montes donec orci. nunc senectus donec. vestibulum in. magna natoque inceptos donec Porttitor Massa dolor eu orci tellus. Id sed et. Quis elementum ultricies aptent vestibulum metus. at. litora platea mauris donec varius Est lorem in sem a nisl, risus Non nibh, ex, eget. feugiat, Dapibus, adipiscing ante dis donec vulputate! eu duis feugiat et ac donec. aliquam eu sed natoque Pellentesque orci. Pellentesque Mattis sed. scelerisque Eget in Libero id Orci consectetur donec. at Orci habitant montes sed donec imperdiet class ornare pharetra Ipsum, sed. Ipsum sed. nunc, Odio sem dapibus, tellus. Sit Tempus aenean ac viverra pharetra platea Class aliquam natoque montes integer aliquam varius penatibus. vestibulum ut. sed Eu posuere</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">40-49 years old</td>
+<td align="left">Mixed/Multiple ethnicities</td>
+<td align="left"></td>
+<td align="left">Topic B,TopicC , Topic E</td>
+<td align="left">senectus feugiat eleifend porttitor non. class, Ligula Class donec blandit enim amet vitae vulputate feugiat, imperdiet dis nibh. enim et lacinia ornare vitae Sit ornare malesuada donec scelerisque accumsan vitae purus rhoncus Proin Tellus sit, Vel libero ullamcorper donec fringilla augue sed. Ante porta ut, ut viverra blandit diam, sed. et augue natoque metus consequat enim sit, vestibulum enim lacus donec sed natoque etiam sed ornare ut aenean ante Orci vestibulum Tellus eleifend sed Ultricies velit lacinia arcu, ac sed eu, sociosqu Et ac sed proin, consequat ex, tempus malesuada dis vestibulum integer non semper dolor blandit Potenti consectetur quam sodales tellus integer volutpat fermentum, scelerisque nunc, metus. sed. eu. lacinia quam condimentum. arcu. platea purus erat, ipsum. velit</td>
+</tr>
+</tbody>
+</table>
+<div id="categorical-analysis" class="section level1">
+<h1>Categorical analysis</h1>
+<p>Any questions that are multiple choice, and/or don’t have too many free-text responses, can be described and visualised in frequency tables, bar plots, and short text. This package provides functions to do this quickly.</p>
+<p>First, the question_types() function can detect from some rules of thumb which columns are which question type. This function returns a list with three elements: categorical, multichoice, and freetext. Each element contains a vector of column names, containing the column names which fall into each group.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">question_types</span>(dummy_response)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; $categorical</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; [1] &quot;Are you completing this consultation as:&quot;         </span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; [2] &quot;Where are you based?&quot;                             </span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; [3] &quot;What is your age?&quot;                                </span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; [4] &quot;What is your ethnicity?&quot;                          </span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt; [5] &quot;May we contact you via email about your response?&quot;</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co">#&gt; $multichoice</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co">#&gt; [1] &quot;Which themes would you like to share your responses about?&quot;</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co">#&gt; $freetext</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; [1] &quot;Please share your views on these themes:&quot;</span></a></code></pre></div>
+<p>Second, based on these question types we can calculate appropriate frequency tables. For this, we can use the response_tables() function. This returns a list, with an element for each column (ie. an element for each question). This function, by default, aggregates any answers that have fewer than 5 responses to avoid statistical disclosure: you can set this yourself using the min_n parameter.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">response_tables</span>(dummy_response, <span class="kw">question_types</span>(dummy_response), <span class="dt">min_n =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; $`Are you completing this consultation as:`</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt;   Response          Frequency Percentage</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt;   &lt;chr&gt;                 &lt;int&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; 1 &quot;&quot;                       32         32</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; 2 &quot;an individual&quot;          32         32</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; 3 &quot;an organisation&quot;        36         36</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; $`Where are you based?`</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; # A tibble: 6 x 3</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt;   Response           Frequency Percentage</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;   &lt;chr&gt;                  &lt;int&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 1 &quot;&quot;                        22         22</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; 2 &quot;England&quot;                 18         18</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; 3 &quot;Northern Ireland&quot;        20         20</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; 4 &quot;Outside the UK&quot;          18         18</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; 5 &quot;Scotland&quot;                13         13</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 6 &quot;Wales&quot;                    9          9</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt; $`What is your age?`</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt; # A tibble: 11 x 3</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt;    Response             Frequency Percentage</span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt;    &lt;chr&gt;                    &lt;int&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="co">#&gt;  1 &quot;&quot;                          10         10</span></a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="co">#&gt;  2 &quot;16-17 years old&quot;            9          9</span></a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="co">#&gt;  3 &quot;18-19 years old&quot;            5          5</span></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="co">#&gt;  4 &quot;20-24 years old&quot;            6          6</span></a>
+<a class="sourceLine" id="cb4-29" title="29"><span class="co">#&gt;  5 &quot;25-29 years old&quot;           12         12</span></a>
+<a class="sourceLine" id="cb4-30" title="30"><span class="co">#&gt;  6 &quot;30-39 years old&quot;            9          9</span></a>
+<a class="sourceLine" id="cb4-31" title="31"><span class="co">#&gt;  7 &quot;40-49 years old&quot;            8          8</span></a>
+<a class="sourceLine" id="cb4-32" title="32"><span class="co">#&gt;  8 &quot;50-59 years old&quot;            6          6</span></a>
+<a class="sourceLine" id="cb4-33" title="33"><span class="co">#&gt;  9 &quot;60-69 years old&quot;           12         12</span></a>
+<a class="sourceLine" id="cb4-34" title="34"><span class="co">#&gt; 10 &quot;70-79 years old&quot;           11         11</span></a>
+<a class="sourceLine" id="cb4-35" title="35"><span class="co">#&gt; 11 &quot;Above 80 years old&quot;        12         12</span></a>
+<a class="sourceLine" id="cb4-36" title="36"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-37" title="37"><span class="co">#&gt; $`What is your ethnicity?`</span></a>
+<a class="sourceLine" id="cb4-38" title="38"><span class="co">#&gt; # A tibble: 6 x 3</span></a>
+<a class="sourceLine" id="cb4-39" title="39"><span class="co">#&gt;   Response                                Frequency Percentage</span></a>
+<a class="sourceLine" id="cb4-40" title="40"><span class="co">#&gt;   &lt;chr&gt;                                       &lt;int&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-41" title="41"><span class="co">#&gt; 1 &quot;&quot;                                             17         17</span></a>
+<a class="sourceLine" id="cb4-42" title="42"><span class="co">#&gt; 2 &quot;Asian/Asian British&quot;                          13         13</span></a>
+<a class="sourceLine" id="cb4-43" title="43"><span class="co">#&gt; 3 &quot;Black/African/Caribbean/Black British&quot;        12         12</span></a>
+<a class="sourceLine" id="cb4-44" title="44"><span class="co">#&gt; 4 &quot;Mixed/Multiple ethnicities&quot;                   23         23</span></a>
+<a class="sourceLine" id="cb4-45" title="45"><span class="co">#&gt; 5 &quot;Other ethnic group&quot;                           19         19</span></a>
+<a class="sourceLine" id="cb4-46" title="46"><span class="co">#&gt; 6 &quot;White&quot;                                        16         16</span></a>
+<a class="sourceLine" id="cb4-47" title="47"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-48" title="48"><span class="co">#&gt; $`May we contact you via email about your response?`</span></a>
+<a class="sourceLine" id="cb4-49" title="49"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
+<a class="sourceLine" id="cb4-50" title="50"><span class="co">#&gt;   Response Frequency Percentage</span></a>
+<a class="sourceLine" id="cb4-51" title="51"><span class="co">#&gt;   &lt;chr&gt;        &lt;int&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-52" title="52"><span class="co">#&gt; 1 &quot;&quot;              30         30</span></a>
+<a class="sourceLine" id="cb4-53" title="53"><span class="co">#&gt; 2 &quot;No&quot;            36         36</span></a>
+<a class="sourceLine" id="cb4-54" title="54"><span class="co">#&gt; 3 &quot;Yes&quot;           34         34</span></a>
+<a class="sourceLine" id="cb4-55" title="55"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-56" title="56"><span class="co">#&gt; $`Which themes would you like to share your responses about?`</span></a>
+<a class="sourceLine" id="cb4-57" title="57"><span class="co">#&gt; # A tibble: 5 x 3</span></a>
+<a class="sourceLine" id="cb4-58" title="58"><span class="co">#&gt;   Response   Frequency Percentage</span></a>
+<a class="sourceLine" id="cb4-59" title="59"><span class="co">#&gt;   &lt;chr&gt;          &lt;int&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-60" title="60"><span class="co">#&gt; 1 &quot; Topic E&quot;        48         48</span></a>
+<a class="sourceLine" id="cb4-61" title="61"><span class="co">#&gt; 2 &quot;Topic B&quot;         48         48</span></a>
+<a class="sourceLine" id="cb4-62" title="62"><span class="co">#&gt; 3 &quot;Topic D &quot;        39         39</span></a>
+<a class="sourceLine" id="cb4-63" title="63"><span class="co">#&gt; 4 &quot;TopicA&quot;          39         39</span></a>
+<a class="sourceLine" id="cb4-64" title="64"><span class="co">#&gt; 5 &quot;TopicC &quot;         45         45</span></a>
+<a class="sourceLine" id="cb4-65" title="65"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb4-66" title="66"><span class="co">#&gt; $`Please share your views on these themes:`</span></a>
+<a class="sourceLine" id="cb4-67" title="67"><span class="co">#&gt; # A tibble: 1 x 3</span></a>
+<a class="sourceLine" id="cb4-68" title="68"><span class="co">#&gt;   Response  Frequency Percentage</span></a>
+<a class="sourceLine" id="cb4-69" title="69"><span class="co">#&gt;   &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-70" title="70"><span class="co">#&gt; 1 Free text      9999       9999</span></a></code></pre></div>
+<p>Third, we can describe these frequency tables as a bar plot. The survey_response_barplot() function generates a list of ggplot objects, one for each question. This is indiscriminate about question type, so for free text questions it will simply return a “Free text” bar.</p>
+<p>This function can take the data directly, since it runs response_tables() under the hood.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">survey_response_barplot</span>(dummy_response)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; $`Are you completing this consultation as:`</span></a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; 
+#&gt; $`Where are you based?`</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; 
+#&gt; $`What is your age?`</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; 
+#&gt; $`What is your ethnicity?`</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; 
+#&gt; $`May we contact you via email about your response?`</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; 
+#&gt; $`Which themes would you like to share your responses about?`</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre><code>#&gt; 
+#&gt; $`Please share your views on these themes:`</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Finally, we can describe this same data using text bullet points: how many possible responses were there, what was the most common, and what was the least common. The summary_text() function takes the output from response_tables, but only one element at a time, so you have to run it as part of an lapply call.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">lapply</span>(<span class="kw">response_tables</span>(dummy_response, <span class="dt">qtypes =</span> <span class="kw">question_types</span>(dummy_response)), summary_text)</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="co">#&gt; $`Are you completing this consultation as:`</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="co">#&gt; * There were 3 response categories (, an individual, an organisation).</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="co">#&gt; * The category with the highest number of responses was &quot;an organisation&quot; with 36 responses (36%).</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="co">#&gt; * The category with the lowest number of responses was &quot;&quot; with 32 responses (32%).</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="co">#&gt; $`Where are you based?`</span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="co">#&gt; * There were 6 response categories (, England, Northern Ireland, Outside the UK, Scotland, Wales).</span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="co">#&gt; * The category with the highest number of responses was &quot;&quot; with 22 responses (22%).</span></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="co">#&gt; * The category with the lowest number of responses was &quot;Wales&quot; with 9 responses (9%).</span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="co">#&gt; $`What is your age?`</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="co">#&gt; * There were 11 response categories (, 16-17 years old, 18-19 years old, 20-24 years old, 25-29 years old, 30-39 years old, 40-49 years old, 50-59 years old, 60-69 years old, 70-79 years old, Above 80 years old).</span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="co">#&gt; * The category with the highest number of responses was &quot;25-29 years old&quot; with 12 responses (12%).</span></a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="co">#&gt; * The category with the lowest number of responses was &quot;18-19 years old&quot; with 5 responses (5%).</span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-17" title="17"><span class="co">#&gt; $`What is your ethnicity?`</span></a>
+<a class="sourceLine" id="cb12-18" title="18"><span class="co">#&gt; * There were 6 response categories (, Asian/Asian British, Black/African/Caribbean/Black British, Mixed/Multiple ethnicities, Other ethnic group, White).</span></a>
+<a class="sourceLine" id="cb12-19" title="19"><span class="co">#&gt; * The category with the highest number of responses was &quot;Mixed/Multiple ethnicities&quot; with 23 responses (23%).</span></a>
+<a class="sourceLine" id="cb12-20" title="20"><span class="co">#&gt; * The category with the lowest number of responses was &quot;Black/African/Caribbean/Black British&quot; with 12 responses (12%).</span></a>
+<a class="sourceLine" id="cb12-21" title="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-22" title="22"><span class="co">#&gt; $`May we contact you via email about your response?`</span></a>
+<a class="sourceLine" id="cb12-23" title="23"><span class="co">#&gt; * There were 3 response categories (, No, Yes).</span></a>
+<a class="sourceLine" id="cb12-24" title="24"><span class="co">#&gt; * The category with the highest number of responses was &quot;No&quot; with 36 responses (36%).</span></a>
+<a class="sourceLine" id="cb12-25" title="25"><span class="co">#&gt; * The category with the lowest number of responses was &quot;&quot; with 30 responses (30%).</span></a>
+<a class="sourceLine" id="cb12-26" title="26"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-27" title="27"><span class="co">#&gt; $`Which themes would you like to share your responses about?`</span></a>
+<a class="sourceLine" id="cb12-28" title="28"><span class="co">#&gt; * There were 5 response categories ( Topic E, Topic B, Topic D , TopicA, TopicC ).</span></a>
+<a class="sourceLine" id="cb12-29" title="29"><span class="co">#&gt; * The category with the highest number of responses was &quot; Topic E&quot; with 48 responses (48%).</span></a>
+<a class="sourceLine" id="cb12-30" title="30"><span class="co">#&gt; * The category with the lowest number of responses was &quot;Topic D &quot; with 39 responses (39%).</span></a>
+<a class="sourceLine" id="cb12-31" title="31"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb12-32" title="32"><span class="co">#&gt; $`Please share your views on these themes:`</span></a>
+<a class="sourceLine" id="cb12-33" title="33"><span class="co">#&gt; * There were 1 response categories (Free text).</span></a>
+<a class="sourceLine" id="cb12-34" title="34"><span class="co">#&gt; * The category with the highest number of responses was &quot;Free text&quot; with 9999 responses (9999%).</span></a>
+<a class="sourceLine" id="cb12-35" title="35"><span class="co">#&gt; * The category with the lowest number of responses was &quot;Free text&quot; with 9999 responses (9999%).</span></a></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

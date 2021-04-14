@@ -44,3 +44,5 @@ vignettes/*.pdf
 *.xls
 *.xlsx
 
+inst/doc
+Meta
