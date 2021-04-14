@@ -4,17 +4,17 @@
 \alias{response_tables}
 \title{Extract and clean responses}
 \usage{
-response_tables(...)
+response_tables(dummy_response, qtypes, min_n = 5)
 }
 \arguments{
-\item{survey_response}{list produced by Hmisc::describe}
+\item{dummy_response}{dataframe}
 }
 \value{
-tibble
+list of tibbles
 }
 \description{
-Take a consultation response spreadsheet (as transformed by Hmisc::describe), and turn it into a neat tibble of values and frequencies.
+Take a consultation response spreadsheet and turn it into a list of neat tibbles of values and frequencies.
 }
 \examples{
-purrr::map(Hmisc::describe(dummy_response), response_tables)
+response_tables(dummy_response, question_types(dummy_response))
 }

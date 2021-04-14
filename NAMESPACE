@@ -2,6 +2,7 @@
 
 export("%>%")
 export(detect_qtypes)
+export(question_types)
 export(response_tables)
 export(summary_text)
 export(survey_response_barplot)

@@ -1,22 +1,34 @@
 #' Extract and clean responses
 #'
-#' Take a consultation response spreadsheet (as transformed by Hmisc::describe), and turn it into a neat tibble of values and frequencies.
+#' Take a consultation response spreadsheet and turn it into a list of neat tibbles of values and frequencies.
 #'
-#' @param survey_response list produced by Hmisc::describe
+#' @param dummy_response dataframe
 #'
-#' @return tibble
+#' @return list of tibbles
 #' @export
 #'
-#' @examples purrr::map(Hmisc::describe(dummy_response), response_tables)
-response_tables <- purrr::safely(function(survey_response){
-  survey_response$values$frequency %>%
-    tibble::as_tibble() %>%
-    dplyr::rename(Frequency = value) %>%
-    dplyr::mutate(Response = survey_response$values$value,
-                  Response = dplyr::case_when(Frequency < 5 ~ "Other (Aggregated)",
-                                              Frequency >= 5 ~ Response)) %>%
-    dplyr::group_by(Response) %>%
-    dplyr::summarise(Frequency = sum(Frequency)) %>%
-    dplyr::mutate(Percentage = round((Frequency/sum(Frequency))*100, 2)) %>%
-    dplyr::select(Response, Frequency, Percentage)
-})
+#' @examples response_tables(dummy_response, question_types(dummy_response))
+response_tables <- function(dummy_response, qtypes, min_n = 5){
+  response_t <- list()
+  for (i in colnames(dummy_response)){
+    if(i %in% qtypes$categorical){
+      response_t[[i]] <- as.data.frame(table(dummy_response[, i]), stringsAsFactors = FALSE) %>%
+          dplyr::mutate(Response = dplyr::case_when(Freq < min_n ~ "Other (Aggregated)",
+                                                    Freq >= min_n ~ Var1)) %>%
+          dplyr::mutate(Percentage = round((Freq/sum(Freq))*100, 2)) %>%
+          dplyr::select(Response, Frequency = Freq, Percentage)
+    } else if (i %in% qtypes$multichoice) {
+      # For multi-choice first split by comma
+      response_t[[i]] <- table(unlist(strsplit(dummy_response[, i], ","))) %>%
+        as.data.frame(., stringsAsFactors = FALSE) %>%
+        dplyr::mutate(Response = dplyr::case_when(Freq < min_n ~ "Other (Aggregated)",
+                                                  Freq >= min_n ~ Var1)) %>%
+        # With multi-choice, percentages can add up to more than 100 because individuals can answer multiple times
+        dplyr::mutate(Percentage = round(Freq / nrow(dummy_response) * 100, 2)) %>%
+        dplyr::select(Response = Var1, Frequency = Freq, Percentage)
+      } else {
+    response_t[[i]] <- data.frame(Response = "Free text", Frequency = 0, Percentage = 0, stringsAsFactors = FALSE)
+      }
+  }
+  return(response_t)
+}

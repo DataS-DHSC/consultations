@@ -7,7 +7,7 @@
 detect_qtypes(
   response_col,
   unique_vals = 12,
-  split_perc = 0.5,
+  split_perc = 0.2,
   prop_total = 0.85,
   prop_common = 0.05
 )
@@ -16,10 +16,13 @@ detect_qtypes(
 \item{response_col}{column from response dataframe}
 }
 \value{
-
+a string value
 }
 \description{
 Looks at the possible answers in a column, and determines which type of question
-is most likely. This is based on rules of thumb and can be adapted for different
-uses.
+is most likely. This is based on rules of thumb and can be tuned for different
+uses using the calculation criteria.
+}
+\examples{
+apply(dummy_response, 2, detect_qtypes)
 }
