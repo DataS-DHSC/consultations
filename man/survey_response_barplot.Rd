@@ -4,17 +4,19 @@
 \alias{survey_response_barplot}
 \title{Visualise responses}
 \usage{
-survey_response_barplot(...)
+survey_response_barplot(dummy_response)
 }
 \arguments{
-\item{survey_response}{list}
+\item{dummy_response}{dataframe}
 }
 \value{
-A ggplot2 object
+list of ggplot2 objects
 }
 \description{
-Take a consultation response spreadsheet (as transformed by Hmisc::describe), and turn it into a barplot.
+Take a consultation response spreadsheet, and turn it into a barplot for each column.
+This uses the question_types() function to clean data first, including aggregating small categories and detecting free text columns.
+It then makes barplots on the basis of the frequency tables produced by response_tables().
 }
 \examples{
-survey_response_barplot(Hmisc::describe(dummy_response))
+survey_response_barplot(dummy_response)
 }
