@@ -19,8 +19,10 @@ Imports:
     ggthemes,
     glue,
     magrittr,
+    Rmpfr,
     tibble,
-    tidyr
+    tidyr,
+    tidytext
 Suggests: 
     rmarkdown,
     knitr,
