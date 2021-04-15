@@ -20,7 +20,7 @@ contact <- c("Yes", "No", "")
 
 # For multi-select categorical questions, we will randomly combine from a topic list
 theme_opts <- c("TopicA", "Topic B", "TopicC ", "Topic D ", " Topic E")
-selection_length <- round(runif(rows, min = 0, max = length(themes)))
+selection_length <- round(runif(rows, min = 0, max = length(theme_opts)))
 themes <- sapply(selection_length, FUN = function(x) paste(sample(theme_opts, size = x, replace = FALSE), collapse = ","))
 
 # For free text, we will reshuffle the words from lorem ipsum
@@ -47,4 +47,3 @@ colnames(dummy_response) <- c("Are you completing this consultation as:",
                           "May we contact you via email about your response?",
                           "Which themes would you like to share your responses about?",
                           "Please share your views on these themes:")
-
