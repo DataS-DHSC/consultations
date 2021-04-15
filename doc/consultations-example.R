@@ -12,14 +12,14 @@ data(dummy_response, package = "consultations")
 knitr::kable(dummy_response[1:5,])
 
 ## ----qtypes-------------------------------------------------------------------
-question_types(dummy_response)
+survey_question_types(dummy_response)
 
 ## ----response tables----------------------------------------------------------
-response_tables(dummy_response, question_types(dummy_response), min_n = 5)
+survey_response_tables(dummy_response, survey_question_types(dummy_response), min_n = 5)
 
 ## ----barplots-----------------------------------------------------------------
 survey_response_barplot(dummy_response)
 
 ## ----summary text-------------------------------------------------------------
-lapply(response_tables(dummy_response, qtypes = question_types(dummy_response)), summary_text)
+lapply(survey_response_tables(dummy_response, qtypes = survey_question_types(dummy_response)), survey_summary_text)
 
