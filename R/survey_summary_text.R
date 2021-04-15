@@ -9,8 +9,8 @@
 #' @return glue string
 #' @export
 #'
-#' @examples lapply(response_tables(dummy_response, qtypes = question_types(dummy_response)), summary_text)
-summary_text <- function(survey_response){
+#' @examples lapply(survey_response_tables(dummy_response, qtypes = survey_question_types(dummy_response)), survey_summary_text)
+survey_summary_text <- function(survey_response){
   # Get the largest and smallest category
   max_cat <- dplyr::slice(survey_response, which.max(Frequency))
   min_cat <- dplyr::slice(survey_response, which.min(Frequency))

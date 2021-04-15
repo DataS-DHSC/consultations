@@ -6,8 +6,8 @@
 #' @return dataframe with a row for each group-word combination, and the tf-idf score
 #' @export
 #'
-#' @examples tf_idf_out(unnest_stem_and_remove_stopwords(dummy_response, colnames(dummy_response)[7], "words"), colnames(dummy_response)[1])
-tf_idf_out <- function(data, grouping_var){
+#' @examples text_tf_idf_out(text_unnest_stem_and_remove_stopwords(dummy_response, colnames(dummy_response)[7], "words"), colnames(dummy_response)[1])
+text_tf_idf_out <- function(data, grouping_var){
   # Allow for both string input and tidyeval using quosures for the grouping_var
   if(is.character(grouping_var)){
     grouping_var <- sym(grouping_var)

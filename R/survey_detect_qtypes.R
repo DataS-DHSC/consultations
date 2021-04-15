@@ -19,8 +19,8 @@
 #' @return a string value
 #' @export
 #'
-#' @examples apply(dummy_response, 2, detect_qtypes)
-detect_qtypes <- function(response_col,
+#' @examples apply(dummy_response, 2, survey_detect_qtypes)
+survey_detect_qtypes <- function(response_col,
                           unique_vals = 12,
                           split_perc = 0.2,
                           prop_total = 0.85,

@@ -11,7 +11,7 @@
 #'
 #' @examples survey_response_barplot(dummy_response)
 survey_response_barplot <- function(dummy_response){
-  response_t <- response_tables(dummy_response, question_types(dummy_response))
+  response_t <- survey_response_tables(dummy_response, survey_question_types(dummy_response))
   plots <- list()
   for (i in names(response_t)){
     plots[[i]] <- response_t[[i]] %>%
