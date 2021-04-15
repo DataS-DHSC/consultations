@@ -10,18 +10,17 @@
 text_tf_idf_out <- function(data, grouping_var){
   # Allow for both string input and tidyeval using quosures for the grouping_var
   if(is.character(grouping_var)){
-    grouping_var <- sym(grouping_var)
+    grouping_var <- rlang::sym(grouping_var)
   } else {
     grouping_var <- rlang::enquo(grouping_var)
   }
-
 
   tf_idf_out <- data %>%
     dplyr::count(!!grouping_var, word, sort = TRUE) %>%
     dplyr::group_by(!!grouping_var) %>%
     dplyr::mutate(total = sum(n)) %>%
     dplyr::arrange(-n) %>%
-    dplyr::mutate(rank = row_number(),
+    dplyr::mutate(rank = dplyr::row_number(),
            `term frequency` = n/total) %>%
     tidytext::bind_tf_idf(word, !!grouping_var, n) %>%
     dplyr::arrange(desc(tf_idf)) %>%
