@@ -14,16 +14,22 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
+    broom,
     dplyr,
     ggplot2,
     ggthemes,
     glue,
+    hunspell,
     magrittr,
+    reshape2,
+    rlang,
     Rmpfr,
+    stopwords,
     tibble,
     tidyr,
     tidytext,
-    tm
+    tm,
+    topicmodels
 Suggests: 
     rmarkdown,
     knitr,
