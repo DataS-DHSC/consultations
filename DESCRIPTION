@@ -22,7 +22,8 @@ Imports:
     Rmpfr,
     tibble,
     tidyr,
-    tidytext
+    tidytext,
+    tm
 Suggests: 
     rmarkdown,
     knitr,

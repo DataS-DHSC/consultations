@@ -12,11 +12,7 @@
 #' text_vis_tf_idf(., colnames(dummy_response)[1])
 #'
 text_vis_tf_idf <- function(tfidf_data, grouping_var, top_n = 10){
-  if(is.character(grouping_var)){
-    grouping_var <- rlang::sym(grouping_var)
-  } else {
-    grouping_var <- rlang::enquo(grouping_var)
-  }
+  grouping_var <- prep_grouping_var(grouping_var)
 
   tfidf_data %>%
     dplyr::group_by(!!grouping_var) %>%
