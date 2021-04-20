@@ -12,7 +12,7 @@
 #' @return dataframe with stemmed, unnested words with removed words
 #' @export
 #'
-#' @examples text_unnest_stem_and_remove_stopwords(dummy_response, colnames(dummy_response)[7], "words")
+#' @examples text_unnest_remove_stem_words(dummy_response, colnames(dummy_response)[7], "words")
 text_unnest_remove_stem_words <- function(data, text_col, token = "words", custom_words = c("")){
   data %>%
     tidytext::unnest_tokens(output = word, input = text_col, token = token) %>%
