@@ -22,5 +22,5 @@ Note: this removes the whole response, not only the word itself - if you want to
 remove one word only, use the text_remove_words() function.
 }
 \examples{
-text_drop_keyword_responses(dummy_response, colnames(dummy_response)[7], malesuada)
+text_drop_keyword_responses(dummy_response, colnames(dummy_response)[7], 'malesuada')
 }

@@ -18,5 +18,5 @@ dataframe with a row for each group-word combination, and the tf-idf score
 Calculate TF-IDF scores
 }
 \examples{
-text_tf_idf_out(text_unnest_stem_and_remove_stopwords(dummy_response, colnames(dummy_response)[7], "words"), colnames(dummy_response)[1])
+text_tf_idf_out(text_unnest_remove_stem_words(dummy_response, colnames(dummy_response)[7], "words"), colnames(dummy_response)[1])
 }

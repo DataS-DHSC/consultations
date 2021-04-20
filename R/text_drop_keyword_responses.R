@@ -11,7 +11,7 @@
 #' @return data.frame with responses that match keywords removed
 #' @export
 #'
-#' @examples text_drop_keyword_responses(dummy_response, colnames(dummy_response)[7], malesuada)
+#' @examples text_drop_keyword_responses(dummy_response, colnames(dummy_response)[7], 'malesuada')
 text_drop_keyword_responses <- function(data, text_col, keywords = c("insert_keywords")){
   # Turn keywords into regex pattern
   regex_pattern <- paste0(" ", paste0(tolower(keywords), collapse = " | "), " ")

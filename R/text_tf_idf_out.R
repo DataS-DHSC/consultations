@@ -6,7 +6,7 @@
 #' @return dataframe with a row for each group-word combination, and the tf-idf score
 #' @export
 #'
-#' @examples text_tf_idf_out(text_unnest_stem_and_remove_stopwords(dummy_response, colnames(dummy_response)[7], "words"), colnames(dummy_response)[1])
+#' @examples text_tf_idf_out(text_unnest_remove_stem_words(dummy_response, colnames(dummy_response)[7], "words"), colnames(dummy_response)[1])
 text_tf_idf_out <- function(data, grouping_var){
   grouping_var <- prep_grouping_var(grouping_var)
 

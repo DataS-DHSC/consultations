@@ -15,7 +15,7 @@
 
 
 text_dtm_prep <- function(data, text_col, grouping_var){
-  unnest_data <- text_unnest_stem_and_remove_stopwords(dummy_response, text_col)
+  unnest_data <- text_unnest_remove_stem_words(dummy_response, text_col)
   prep_data <- text_tf_idf_out(unnest_data, grouping_var)
 
 

@@ -7,7 +7,7 @@
 #' @return ggplot2 plot
 #' @export
 #'
-#' @examples text_unnest_stem_and_remove_stopwords(dummy_response, colnames(dummy_response)[7], "words") %>%
+#' @examples text_unnest_remove_stem_words(dummy_response, colnames(dummy_response)[7], "words") %>%
 #' text_tf_idf_out(., colnames(dummy_response)[1]) %>%
 #' text_vis_tf_idf(., colnames(dummy_response)[1])
 #'
