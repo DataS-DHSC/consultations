@@ -55,3 +55,79 @@ Finally, we can describe this same data using text bullet points: how many possi
 lapply(survey_response_tables(dummy_response, qtypes = survey_question_types(dummy_response)), survey_summary_text)
 ```
 
+# Free text analysis
+
+If you have columns with free text, the quantitative options above will not return useful results. Instead, you can use the text_ set of functions provided in this package.
+
+First, we provide a function for preparing text data. In most cases, you want to:
+
+* Unnest text, so each word (or sentence, or bi/trigram) gets a separate row
+* Remove stopwords like 'and' or 'or'
+* Stem words, so words like 'manage' and 'manager' are grouped together as 'manag'-related words
+
+This function returns all columns, but adds a 'word' column to the end with the unnested, prepared words. 
+
+```{r prep}
+text_column <- survey_question_types(dummy_response)$freetext[1]
+text_unnest_stem_and_remove_stopwords(dummy_response, text_column)[1:5,]
+```
+
+Second, a common metric you want to calculate is the TF-IDF values of words in your responses. This function allows for grouping responses: for example, you can consider all responses from each geographical location as one "document", where words may be related. However, if you have a one-row-per-response structure, you may need to first create an "ID" column that makes clear that each row is its own text entity. 
+
+```{r tfidf}
+dummy_response <- dummy_response %>%
+  dplyr::mutate(group_id = row.names(.)) %>%
+  text_unnest_stem_and_remove_stopwords(., text_column)
+text_tf_idf_out(dummy_response, 'group_id')
+```
+
+Third, you can calculate a topic model. Under the hood, this first calculates the tf-idf scores as before. Moreover, under the hood, you first need to calculate a document-term matrix. If you ever want to look at the document-term matrix directly, you can:
+
+```{r dtm}
+dummy_dtm <- text_dtm_prep(dummy_response, text_column, 'group_id')
+```
+
+However, you are probably more interested in the topic model itself. Gibbs LDA is implemented. By default, the number of topics modelled is k = 2.
+
+This returns a list with 4 elements: the first, `lda_out`, is the full topic model. Then follow two data.frames containing beta and gamma scores. Finally, the log likelihood of the model is returned as the `logLik` element. 
+
+```{r lda}
+text_dtm_prep(dummy_response, text_column, 'group_id') %>%
+  text_lda_dtm(., 'group_id')
+```
+
+This in itself is useful if you know how many topics you are interested in. However, more often you will want to try a range and see which number of topics has the highest harmonic mean: a measure of coherence of the topics. 
+
+This means you have to loop through a number of k's: 
+
+```{r lda harmonicmean}
+# Options for k
+k_opts <- 10:20
+# Apply the LDA function to each k - this returns a list
+lda_opts <- lapply(2:10, function(x) text_lda_dtm(dummy_dtm, 'group_id', k = x))
+
+
+
+# From each list element, get the 'logLik' value
+logLikelihoods <- unlist(lapply(1:length(k_opts), function(x) as.double(lda_opts[[x]]$logLik)))
+# Calculate harmonic mean
+harmonicMean <- function(logLikelihoods, precision = 2000L) {
+  llMed <- median(logLikelihoods)
+  as.double(llMed - log(Rmpfr::mean(exp(-Rmpfr::mpfr(logLikelihoods,
+                                       prec = precision) + llMed))))
+}
+hm_many <- purrr::map_dbl(logLikelihoods, harmonicMean)
+
+
+ggplot2::ggplot(data.frame(k_opts, hm_many), ggplot2::aes(x=k_opts, y=hm_many)) + ggplot2::geom_path(lwd=1.5) +
+  ggplot2::theme(text = ggplot2::element_text(family= NULL),
+        axis.title.y=ggplot2::element_text(vjust=1, size=16),
+        axis.title.x=ggplot2::element_text(vjust=-.5, size=16),
+        axis.text=ggplot2::element_text(size=16),
+        plot.title=ggplot2::element_text(size=20)) +
+  ggplot2::xlab('Number of Topics') +
+  ggplot2::ylab('Harmonic Mean')+
+  ggplot2::ggtitle(expression(atop("Latent Dirichlet Allocation Analysis of survey responses",
+                          atop(italic("How many distinct topics in the responses?"), ""))))
+```
+
