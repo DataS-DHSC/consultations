@@ -31,7 +31,11 @@ survey_detect_qtypes <- function(response_col,
     .[order(.$Freq, decreasing = TRUE),]
 
   # Split responses by commas
-  split_responses <- as.data.frame(table(unlist(strsplit(response_col, ","))))
+  if(any(grep(",", response_col))){
+    split_responses <- as.data.frame(table(unlist(strsplit(response_col, ","))))
+  } else {
+    split_responses <- as.data.frame(table(response_col))
+    }
 
 
   # If fewer than x unique values, we treat it as categorical
