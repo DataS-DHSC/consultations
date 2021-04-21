@@ -31,8 +31,6 @@ survey_detect_qtypes <- function(response_col,
     .[order(.$Freq, decreasing = TRUE),] %>%
     as.data.frame(.)
 
-  responses <- integer(0)
-
   # Split responses by commas
   if(any(grep(",", response_col))){
     split_responses <- as.data.frame(table(unlist(strsplit(response_col, ","))))
