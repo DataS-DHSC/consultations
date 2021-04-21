@@ -31,6 +31,8 @@ survey_detect_qtypes <- function(response_col,
     .[order(.$Freq, decreasing = TRUE),] %>%
     as.data.frame(.)
 
+  responses <- integer(0)
+
   # Split responses by commas
   if(any(grep(",", response_col))){
     split_responses <- as.data.frame(table(unlist(strsplit(response_col, ","))))
@@ -40,26 +42,30 @@ survey_detect_qtypes <- function(response_col,
 
 
   # If fewer than x unique values, we treat it as categorical
-  if(nrow(responses) < unique_vals){
-    return("categorical")
+  if (length(responses) > 0) {
+    if (nrow(responses) < unique_vals){
+      return("categorical")
 
-    # If splitting the answers by comma results in less than x%
-    # as many categories, we consider it multi-choice
-  } else if (nrow(split_responses) < split_perc*nrow(responses)) {
-    return("multi-choice")
+      # If splitting the answers by comma results in less than x%
+      # as many categories, we consider it multi-choice
+    } else if (nrow(split_responses) < split_perc*nrow(responses)) {
+      return("multi-choice")
 
-    # If the 5 most common values account for over x% of responses,
-    # we treat it as categorical
-  } else if (sum(responses$Freq[1:5]) > prop_total*sum(responses$Freq)){
-    return("categorical")
+      # If the 5 most common values account for over x% of responses,
+      # we treat it as categorical
+    } else if (sum(responses$Freq[1:5]) > prop_total*sum(responses$Freq)){
+      return("categorical")
 
-    # If the most common response at most x% of responses,
-    # we treat it as free-text
-  } else if (max(responses$Freq) < prop_common*sum(responses$Freq)) {
-    return("free text")
+      # If the most common response at most x% of responses,
+      # we treat it as free-text
+    } else if (max(responses$Freq) < prop_common*sum(responses$Freq)) {
+      return("free text")
 
-    # For other types, we consider free text
+      # For other types, we consider free text
+    } else {
+      return("free text")
+    }
   } else {
-    return("free text")
+    return("empty")
   }
 }
