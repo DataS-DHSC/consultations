@@ -23,16 +23,20 @@ survey_response_tables <- function(dummy_response, qtypes, min_n = 5){
       } else {
         data_prep <- data.frame(Var1 = "Free text", Freq = 9999, Percentage = 9999, stringsAsFactors = FALSE)
       }
-    # Clean data table
-    response_t[[i]] <- data_prep %>%
-      # Aggregate small groups to protect against statistical disclosure
-      dplyr::mutate(Response = dplyr::case_when(Freq < min_n ~ "Other (Aggregated)",
-                                                Freq >= min_n ~ Var1)) %>%
-      dplyr::group_by(Response) %>%
-      dplyr::summarise(Freq = sum(Freq)) %>%
-      # With multi-choice, percentages can add up to more than 100 because individuals can answer multiple times
-      dplyr::mutate(Percentage = round(Freq / nrow(dummy_response) * 100, 2)) %>%
-      dplyr::select(Response, Frequency = Freq, Percentage)
+    if(nrow(data_prep) > 0){
+      # Clean data table
+      response_t[[i]] <- data_prep %>%
+        # Aggregate small groups to protect against statistical disclosure
+        dplyr::mutate(Response = dplyr::case_when(Freq < min_n ~ "Other (Aggregated)",
+                                                  Freq >= min_n ~ Var1)) %>%
+        dplyr::group_by(Response) %>%
+        dplyr::summarise(Freq = sum(Freq)) %>%
+        # With multi-choice, percentages can add up to more than 100 because individuals can answer multiple times
+        dplyr::mutate(Percentage = round(Freq / nrow(dummy_response) * 100, 2)) %>%
+        dplyr::select(Response, Frequency = Freq, Percentage)
+    } else {
+      response_t[[i]] <- data.frame(Response = dummy_response[1, i], Freq = nrow(dummy_response), Percentage = 100)
+    }
   }
   return(response_t)
 }
