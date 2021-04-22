@@ -25,17 +25,16 @@ survey_detect_qtypes <- function(response_col,
                           split_perc = 0.2,
                           prop_total = 0.85,
                           prop_common = 0.05){
-
   # Prepare responses data frequency table
-  responses <- as.data.frame(table(response_col)) %>%
+  responses <- as.data.frame(table(response_col), stringsAsFactors = FALSE) %>%
     # Sort responses by frequency
     .[order(.$Freq, decreasing = TRUE),]
 
   # Split responses by commas
   if(any(grep(",", response_col))){
-    split_responses <- as.data.frame(table(unlist(strsplit(response_col, ","))))
+    split_responses <- as.data.frame(table(unlist(strsplit(response_col, ","))), stringsAsFactors = FALSE)
   } else {
-    split_responses <- as.data.frame(table(response_col))
+    split_responses <- as.data.frame(table(response_col), stringsAsFactors = FALSE)
     }
 
 

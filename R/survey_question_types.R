@@ -10,7 +10,7 @@
 #' @examples survey_question_types(dummy_response)
 survey_question_types <- function(dummy_response){
   # Apply question detection function
-  question_types <- as.data.frame(apply(dummy_response, 2, survey_detect_qtypes))
+  question_types <- as.data.frame(apply(dummy_response, 2, survey_detect_qtypes), stringsAsFactors = FALSE)
   question_types$question <- rownames(question_types)
   colnames(question_types) <- c("type", "question")
 
