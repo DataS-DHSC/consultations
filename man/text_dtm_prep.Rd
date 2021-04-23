@@ -11,7 +11,8 @@ text_dtm_prep(data, text_col, grouping_var)
 
 \item{text_col}{column name containing free text}
 
-\item{grouping_var}{column used for determining what consistutes a document; with quotation marks (string) or without (tidyeval)}
+\item{grouping_var}{column used for determining what consistutes a document; with quotation marks (string).
+If each response is a row, add a column with row identifiers to be the grouping_var.}
 }
 \value{
 Document-Term Matrix from responses dataframe
@@ -22,5 +23,7 @@ Includes text preparation (unnesting, stopword removal, and stemming).
 Also includes creation of tf-idf transformation.
 }
 \examples{
-text_dtm_prep(dummy_response, colnames(dummy_response)[7], colnames(dummy_response)[1])
+dummy_response \%>\%
+dplyr::mutate(response_id = row.names(.)) \%>\%
+text_dtm_prep(., colnames(dummy_response)[7], 'response_id')
 }

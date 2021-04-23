@@ -4,19 +4,10 @@
 \alias{text_lda_dtm}
 \title{Calculate LDA topic model}
 \usage{
-text_lda_dtm(
-  data_dtm,
-  grouping_var,
-  k = 2,
-  burnin = 1000,
-  iter = 1000,
-  keep = 50
-)
+text_lda_dtm(data_dtm, k = 2, burnin = 1000, iter = 1000, keep = 50)
 }
 \arguments{
 \item{data_dtm}{Document-Term matrix as prepared by text_dtm_prep}
-
-\item{grouping_var}{column used for determining what consistutes a document; with quotation marks (string) or without (tidyeval)}
 
 \item{k}{Number of topics to detect}
 
@@ -27,12 +18,15 @@ text_lda_dtm(
 \item{keep}{parameter for Gibbs LDA}
 }
 \value{
-list with elements: lda_out (full LDA topicmodel), beta (beta scores), gamma (gamma scores), and logLik (Log likelihood of topicmodel object)
+list with elements: lda_out (full LDA topicmodel), beta (beta scores),
+gamma (gamma scores), and logLik (Log likelihood of topicmodel object)
 }
 \description{
 Calculate LDA topic model
 }
 \examples{
-text_dtm_prep(dummy_response, colnames(dummy_response)[7], colnames(dummy_response)[1]) \%>\%
-text_lda_dtm(., colnames(dummy_response)[1])
+dummy_response \%>\%
+dplyr::mutate(response_id = row.names(.)) \%>\%
+text_dtm_prep(., colnames(dummy_response)[7], 'response_id') \%>\%
+text_lda_dtm(., k = 5)
 }
