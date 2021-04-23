@@ -38,7 +38,8 @@ dummy_response <- data.frame(respond = sample(respond, size = rows, replace = TR
                          ethnicity = sample(ethnicity, size = rows, replace = TRUE),
                          contact = sample(contact, size = rows, replace = TRUE),
                          themes = themes,
-                         free_text = free_text)
+                         free_text = free_text,
+                         response_id = seq(1, rows))
 # Set interpretable column names
 colnames(dummy_response) <- c("Are you completing this consultation as:",
                           "Where are you based?",
@@ -46,4 +47,5 @@ colnames(dummy_response) <- c("Are you completing this consultation as:",
                           "What is your ethnicity?",
                           "May we contact you via email about your response?",
                           "Which themes would you like to share your responses about?",
-                          "Please share your views on these themes:")
+                          "Please share your views on these themes:",
+                          "response_id")

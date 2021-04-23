@@ -18,8 +18,6 @@ single integer: best number of topics
 Select best number of topics for LDA
 }
 \examples{
-dummy_response \%>\%
-dplyr::mutate(response_id = row.names(.)) \%>\%
-text_dtm_prep(., colnames(dummy_response)[7], 'response_id') \%>\%
+text_dtm_prep(dummy_response, colnames(dummy_response)[7], 'response_id') \%>\%
 text_best_n_topics(., seq(5, 10))
 }

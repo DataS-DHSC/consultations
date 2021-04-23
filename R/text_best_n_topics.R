@@ -6,9 +6,7 @@
 #' @return single integer: best number of topics
 #' @export
 #'
-#' @examples dummy_response %>%
-#' dplyr::mutate(response_id = row.names(.)) %>%
-#' text_dtm_prep(., colnames(dummy_response)[7], 'response_id') %>%
+#' @examples text_dtm_prep(dummy_response, colnames(dummy_response)[7], 'response_id') %>%
 #' text_best_n_topics(., seq(5, 10))
 text_best_n_topics <- function(data_dtm, k_opts){
   # Apply LDA repeatedly, once for each possible k

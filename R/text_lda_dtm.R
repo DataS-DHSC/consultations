@@ -10,9 +10,7 @@
 #' gamma (gamma scores), and logLik (Log likelihood of topicmodel object)
 #' @export
 #'
-#' @examples dummy_response %>%
-#' dplyr::mutate(response_id = row.names(.)) %>%
-#' text_dtm_prep(., colnames(dummy_response)[7], 'response_id') %>%
+#' @examples text_dtm_prep(dummy_response, colnames(dummy_response)[7], 'response_id') %>%
 #' text_lda_dtm(., k = 5)
 text_lda_dtm <- function(data_dtm, k = 2, burnin = 1000, iter = 1000, keep = 50){
   lda_out <- topicmodels::LDA(data_dtm, k = k,
