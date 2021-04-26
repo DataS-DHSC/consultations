@@ -22,8 +22,8 @@
 #' @examples apply(dummy_response, 2, survey_detect_qtypes)
 survey_detect_qtypes <- function(response_col,
                           unique_vals = 20,
-                          split_perc = 0.2,
-                          prop_total = 0.85,
+                          split_perc = 0.4,
+                          prop_total = 0.9,
                           prop_common = 0.05){
   # Remove non-responses
   response_col <- response_col[nchar(response_col) > 0]
@@ -32,11 +32,15 @@ survey_detect_qtypes <- function(response_col,
     # Sort responses by frequency
     .[order(.$Freq, decreasing = TRUE),]
 
-  # Split responses by commas
+  # Split responses by commas (only if no whitespace afterwards)
   if(any(grep(",", response_col))){
-    split_responses <- as.data.frame(table(unlist(strsplit(response_col, ","))), stringsAsFactors = FALSE)
+    split_responses <- as.data.frame(table(unlist(strsplit(response_col, ",(?!\\s)", perl = TRUE))), stringsAsFactors = FALSE) %>%
+      # Sort responses by frequency
+      .[order(.$Freq, decreasing = TRUE),]
   } else {
-    split_responses <- as.data.frame(table(response_col), stringsAsFactors = FALSE)
+    split_responses <- as.data.frame(table(response_col), stringsAsFactors = FALSE) %>%
+      # Sort responses by frequency
+      .[order(.$Freq, decreasing = TRUE),]
     }
 
 
@@ -59,6 +63,12 @@ survey_detect_qtypes <- function(response_col,
       # we treat it as categorical
     } else if (sum(responses$Freq[1:5]) > prop_total*sum(responses$Freq)){
       return("categorical")
+
+
+      # If the 5 most common values after splitting account for over x% of responses,
+      # we treat it as multi-choice
+    } else if (sum(split_responses$Freq[1:5]) > prop_total*sum(responses$Freq)){
+      return("multi-choice")
 
       # If the most common response at most x% of responses,
       # we treat it as free-text

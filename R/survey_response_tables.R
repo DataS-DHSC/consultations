@@ -18,7 +18,7 @@ survey_response_tables <- function(dummy_response, qtypes, min_n = 5){
       data_prep <- as.data.frame(table(dummy_response[, i]), stringsAsFactors = FALSE)
       } else if (i %in% qtypes$multichoice) {
         # For multi-choice first split answers by comma
-        data_prep <- table(unlist(strsplit(dummy_response[, i], ","))) %>%
+        data_prep <- table(unlist(strsplit(dummy_response[, i], ",(?!\\s)", perl = TRUE))) %>%
         as.data.frame(., stringsAsFactors = FALSE)
       } else {
         data_prep <- data.frame(Var1 = "Free text", Freq = nrow(dummy_response), stringsAsFactors = FALSE)
