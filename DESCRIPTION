@@ -25,6 +25,7 @@ Imports:
     rlang,
     Rmpfr,
     stopwords,
+    stringr,
     tibble,
     tidyr,
     tidytext,

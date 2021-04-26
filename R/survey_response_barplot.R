@@ -27,7 +27,7 @@ survey_response_barplot <- function(dummy_response){
         legend.direction = "horizontal",
         legend.title = ggplot2::element_blank(),
         axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))+
-      ggplot2::ggtitle(i)
+      ggplot2::ggtitle(stringr::str_wrap(i, 60))
   }
   return(plots)
 }
