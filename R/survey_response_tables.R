@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples survey_response_tables(dummy_response, survey_question_types(dummy_response))
-survey_response_tables <- function(dummy_response, qtypes, min_n = 5){
+survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
   response_t <- list()
   for (i in colnames(dummy_response)){
     if(i %in% qtypes$categorical){
