@@ -26,7 +26,7 @@ survey_detect_qtypes <- function(response_col,
                           prop_total = 0.85,
                           prop_common = 0.05){
   # Remove non-responses
-  response_col <- response_col[response_col != ""]
+  response_col <- response_col[nchar(response_col) > 0]
   # Prepare responses data frequency table
   responses <- as.data.frame(table(response_col), stringsAsFactors = FALSE) %>%
     # Sort responses by frequency
@@ -40,14 +40,19 @@ survey_detect_qtypes <- function(response_col,
     }
 
 
-  # If fewer than x unique values, we treat it as categorical
   if (length(responses) > 0) {
+      # If fewer than x unique values, we treat it as categorical
     if (nrow(responses) < unique_vals){
       return("categorical")
 
       # If splitting the answers by comma results in less than x%
       # as many categories, we consider it multi-choice
     } else if (nrow(split_responses) < split_perc*nrow(responses)) {
+      return("multi-choice")
+
+      # If splitting the answers by comme results in less than x
+      # unique values, we treat it as multi-choice
+    } else if(nrow(responses) < unique_vals){
       return("multi-choice")
 
       # If the 5 most common values account for over x% of responses,
