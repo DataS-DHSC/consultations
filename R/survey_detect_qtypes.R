@@ -25,6 +25,8 @@ survey_detect_qtypes <- function(response_col,
                           split_perc = 0.2,
                           prop_total = 0.85,
                           prop_common = 0.05){
+  # Remove non-responses
+  response_col <- response_col[response_col != ""]
   # Prepare responses data frequency table
   responses <- as.data.frame(table(response_col), stringsAsFactors = FALSE) %>%
     # Sort responses by frequency

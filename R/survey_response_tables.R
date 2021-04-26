@@ -26,6 +26,8 @@ survey_response_tables <- function(dummy_response, qtypes, min_n = 5){
     if(nrow(data_prep) > 0){
       # Clean data table
       response_t[[i]] <- data_prep %>%
+        # Remove empty responses
+        dplyr::filter(Var1 != "") %>%
         # Aggregate small groups to protect against statistical disclosure
         dplyr::mutate(Response = dplyr::case_when(Freq < min_n ~ "Other (Aggregated)",
                                                   Freq >= min_n ~ Var1)) %>%
