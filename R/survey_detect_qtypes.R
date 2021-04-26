@@ -22,8 +22,8 @@
 #' @examples apply(dummy_response, 2, survey_detect_qtypes)
 survey_detect_qtypes <- function(response_col,
                           unique_vals = 20,
-                          split_perc = 0.4,
-                          prop_total = 0.9,
+                          split_perc = 0.5,
+                          prop_total = 0.55,
                           prop_common = 0.05){
   # Remove non-responses
   response_col <- response_col[nchar(response_col) > 0]
