@@ -11,7 +11,7 @@
 #'   \item{What is your age?}{In age brackets}
 #'   \item{What is your ethnicity?}{Based on ONS default ethnic groups}
 #'   \item{May we contact you via email about your response?}{Yes or no}
-#'   \item{Which themes would you like to share your responses about?}{Topics A to E, with various spellings and concatenated}
+#'   \item{Which themes would you like to share your responses about?}{Topics A to E, concatenated}
 #'   \item{Please share your views on these themes}{Randomly generated lorem ipsum free text}
 #'   \item{response_id}{Sequence of row IDs, signifying each row is a single response}
 #' }

@@ -1,6 +1,9 @@
 #' Extract and clean responses
 #'
 #' Take a consultation response spreadsheet and turn it into a list of neat tibbles of values and frequencies.
+#' Removes non-responses, so calculates percentages of answers as a proportion of individuals who actually answered that question.
+#'
+#' Aggregates small groups of answers into an "Other (Aggregated)" group.
 #'
 #' @param dummy_response dataframe
 #' @param qtypes list with elements categorical, multichoice, and freetext containing vectors of column names
@@ -13,31 +16,39 @@
 survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
   response_t <- list()
   for (i in colnames(dummy_response)){
-    if(i %in% qtypes$categorical){
-      # For categorical, simple frequency table
-      data_prep <- as.data.frame(table(dummy_response[, i]), stringsAsFactors = FALSE)
+    column <- dummy_response[, i]
+    # Remove non-responses
+    column <- column[column != "" & !is.na(column)]
+    if(length(column) > 0){
+      if(i %in% qtypes$categorical){
+        # For categorical, simple frequency table
+        data_prep <- as.data.frame(table(column), stringsAsFactors = FALSE)
       } else if (i %in% qtypes$multichoice) {
         # For multi-choice first split answers by comma
-        data_prep <- table(unlist(strsplit(dummy_response[, i], ",(?!\\s)", perl = TRUE))) %>%
-        as.data.frame(., stringsAsFactors = FALSE)
+        data_prep <- table(unlist(strsplit(column, ",(?!\\s)", perl = TRUE))) %>%
+          as.data.frame(., stringsAsFactors = FALSE) %>%
+          dplyr::rename(column = Var1)
       } else {
-        data_prep <- data.frame(Var1 = "Free text", Freq = nrow(dummy_response), stringsAsFactors = FALSE)
+        data_prep <- data.frame(column = "Free text", Freq = length(column), stringsAsFactors = FALSE)
       }
-    if(nrow(data_prep) > 0){
-      # Clean data table
-      response_t[[i]] <- data_prep %>%
-        # Remove empty responses
-        dplyr::filter(nchar(Var1) > 0) %>%
-        # Aggregate small groups to protect against statistical disclosure
-        dplyr::mutate(Response = dplyr::case_when(Freq < min_n ~ "Other (Aggregated)",
-                                                  Freq >= min_n ~ Var1)) %>%
-        dplyr::group_by(Response) %>%
-        dplyr::summarise(Freq = sum(Freq)) %>%
-        # With multi-choice, percentages can add up to more than 100 because individuals can answer multiple times
-        dplyr::mutate(Percentage = round(Freq / nrow(dummy_response) * 100, 2)) %>%
-        dplyr::select(Response, Frequency = Freq, Percentage)
+      if(nrow(data_prep) > 0){
+        # Clean data table
+        response_t[[i]] <- data_prep %>%
+          # Remove empty responses
+          dplyr::filter(nchar(column) > 0) %>%
+          # Aggregate small groups to protect against statistical disclosure
+          dplyr::mutate(Response = dplyr::case_when(Freq < min_n ~ "Other (Aggregated)",
+                                                    Freq >= min_n ~ column)) %>%
+          dplyr::group_by(Response) %>%
+          dplyr::summarise(Freq = sum(Freq)) %>%
+          # With multi-choice, percentages can add up to more than 100 because individuals can answer multiple times
+          dplyr::mutate(Percentage = round(Freq / length(column) * 100, 2)) %>%
+          dplyr::select(Response, Frequency = Freq, Percentage)
+      } else {
+        response_t[[i]] <- data.frame(Response = dummy_response[1, i], Freq = nrow(dummy_response), Percentage = 100)
+      }
     } else {
-      response_t[[i]] <- data.frame(Response = dummy_response[1, i], Freq = nrow(dummy_response), Percentage = 100)
+      response_t[[i]] <- data.frame(Response = "empty", Freq = nrow(dummy_response), Percentage = 100)
     }
   }
   return(response_t)

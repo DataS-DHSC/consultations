@@ -7,8 +7,8 @@
 survey_detect_qtypes(
   response_col,
   unique_vals = 20,
-  split_perc = 0.2,
-  prop_total = 0.85,
+  split_perc = 0.5,
+  prop_total = 0.55,
   prop_common = 0.05
 )
 }

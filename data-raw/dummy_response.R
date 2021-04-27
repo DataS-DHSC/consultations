@@ -19,7 +19,7 @@ ethnicity <- c("White", "Mixed/Multiple ethnicities", "Asian/Asian British",
 contact <- c("Yes", "No", "")
 
 # For multi-select categorical questions, we will randomly combine from a topic list
-theme_opts <- c("TopicA", "Topic B", "TopicC ", "Topic D ", " Topic E")
+theme_opts <- c("TopicA", "Topic B", "TopicC", "Topic D", "Topic E")
 selection_length <- round(runif(rows, min = 0, max = length(theme_opts)))
 themes <- sapply(selection_length, FUN = function(x) paste(sample(theme_opts, size = x, replace = FALSE), collapse = ","))
 

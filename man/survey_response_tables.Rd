@@ -4,7 +4,7 @@
 \alias{survey_response_tables}
 \title{Extract and clean responses}
 \usage{
-survey_response_tables(dummy_response, qtypes, min_n = 5)
+survey_response_tables(dummy_response, qtypes, min_n = 10)
 }
 \arguments{
 \item{dummy_response}{dataframe}
@@ -18,6 +18,10 @@ list of tibbles
 }
 \description{
 Take a consultation response spreadsheet and turn it into a list of neat tibbles of values and frequencies.
+Removes non-responses, so calculates percentages of answers as a proportion of individuals who actually answered that question.
+}
+\details{
+Aggregates small groups of answers into an "Other (Aggregated)" group.
 }
 \examples{
 survey_response_tables(dummy_response, survey_question_types(dummy_response))
