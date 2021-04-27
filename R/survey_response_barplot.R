@@ -2,16 +2,17 @@
 #'
 #' Take a consultation response spreadsheet, and turn it into a barplot for each column.
 #' This uses the question_types() function to clean data first, including aggregating small categories and detecting free text columns.
-#' It then makes barplots on the basis of the frequency tables produced by response_tables().
+#' It then makes barplots on the basis of the frequency tables produced by survey_response_tables().
 #'
 #' @param dummy_response dataframe
+#' @param qtypes list with elements categorical, multichoice, and freetext containing vectors of column names
 #'
 #' @return list of ggplot2 objects
 #' @export
 #'
-#' @examples survey_response_barplot(dummy_response)
-survey_response_barplot <- function(dummy_response){
-  response_t <- survey_response_tables(dummy_response, survey_question_types(dummy_response))
+#' @examples survey_response_barplot(dummy_response, survey_question_types(dummy_response))
+survey_response_barplot <- function(dummy_response, qtypes){
+  response_t <- survey_response_tables(dummy_response, qtypes)
   plots <- list()
   for (i in names(response_t)){
     plots[[i]] <- response_t[[i]] %>%
