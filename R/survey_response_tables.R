@@ -18,7 +18,7 @@ survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
   for (i in colnames(dummy_response)){
     column <- dummy_response[, i]
     # Remove non-responses
-    column <- column[column != "" & !is.na(column)]
+    column <- column[column != "" & !is.na(column) & column != "No response"]
     if(length(column) > 0){
       if(i %in% qtypes$categorical){
         # For categorical, simple frequency table
