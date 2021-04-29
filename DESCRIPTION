@@ -24,6 +24,7 @@ Imports:
     reshape2,
     rlang,
     Rmpfr,
+    SnowballC,
     stopwords,
     stringr,
     tibble,
