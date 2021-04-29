@@ -16,9 +16,19 @@
 survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
   response_t <- list()
   for (i in colnames(dummy_response)){
+    i <- "Where are you based?"
+
     column <- dummy_response[, i]
+
+    # Save factor levels
+    if(is.factor(column)){
+      col_levels <- c(levels(column), "Other (Aggregated)")
+    }
+
     # Remove non-responses
-    column <- column[column != "" & !is.na(column) & column != "No response"]
+    column <- column[column != "" & !is.na(column)]
+
+    # Prepare table based on column type
     if(length(column) > 0){
       if(i %in% qtypes$categorical){
         # For categorical, simple frequency table
@@ -31,25 +41,30 @@ survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
       } else {
         data_prep <- data.frame(column = "Free text", Freq = length(column), stringsAsFactors = FALSE)
       }
-      if(nrow(data_prep) > 0){
-        # Clean data table
-        response_t[[i]] <- data_prep %>%
-          # Remove empty responses
-          dplyr::filter(nchar(column) > 0) %>%
-          # Aggregate small groups to protect against statistical disclosure
-          dplyr::mutate(Response = dplyr::case_when(Freq < min_n ~ "Other (Aggregated)",
-                                                    Freq >= min_n ~ column)) %>%
-          dplyr::group_by(Response) %>%
-          dplyr::summarise(Freq = sum(Freq)) %>%
-          # With multi-choice, percentages can add up to more than 100 because individuals can answer multiple times
-          dplyr::mutate(Percentage = round(Freq / length(column) * 100, 2)) %>%
-          dplyr::select(Response, Frequency = Freq, Percentage)
+
+      # Clean data table
+      response_t[[i]] <- data_prep %>%
+        # Remove empty responses
+        dplyr::filter(nchar(column) > 0) %>%
+        # Aggregate small groups to protect against statistical disclosure
+        dplyr::mutate(Response = dplyr::case_when(Freq < min_n ~ "Other (Aggregated)",
+                                                  Freq >= min_n ~ column)) %>%
+        dplyr::group_by(Response) %>%
+        dplyr::summarise(Freq = sum(Freq)) %>%
+        # With multi-choice, percentages can add up to more than 100 because individuals can answer multiple times
+        dplyr::mutate(Percentage = round(Freq / length(column) * 100, 2)) %>%
+        dplyr::select(Response, Frequency = Freq, Percentage)
       } else {
         response_t[[i]] <- data.frame(Response = dummy_response[1, i], Freq = nrow(dummy_response), Percentage = 100)
+        }
+
+    # Re-apply factor levels and sort
+    if(is.factor(column)){
+      response_t[[i]]$Response <- factor(response_t[[i]]$Response, levels = col_levels)
+      response_t[[i]] <- dplyr::arrange(response_t[[i]], Response)
       }
-    } else {
-      response_t[[i]] <- data.frame(Response = "empty", Freq = nrow(dummy_response), Percentage = 100)
     }
-  }
+
+
   return(response_t)
-}
+  }
