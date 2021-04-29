@@ -20,7 +20,8 @@ survey_response_barplot <- function(dummy_response, qtypes){
       ggplot2::geom_col()+
       ggplot2::theme(axis.title.x = ggplot2::element_blank())+
       ggplot2::scale_fill_viridis_d()+
-      ggplot2::labs(x = "", y = "Number of responses")+
+      ggplot2::labs(x = "", y = "Number of responses",
+                    caption = paste0("Total number of responses included: ", sum(response_t[[i]]$Frequency)))+
       ggthemes::theme_calc()+
       ggplot2::theme(
         legend.position = "none",
