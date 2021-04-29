@@ -6,11 +6,14 @@
 #' @return dataframe with a row for each group-word combination, and the tf-idf score
 #' @export
 #'
-#' @examples text_tf_idf_out(text_unnest_remove_stem_words(dummy_response, colnames(dummy_response)[7], "words"), colnames(dummy_response)[1])
-text_tf_idf_out <- function(data, grouping_var){
+#' @examples tidytext::unnest_tokens(dummy_response, 'word', colnames(dummy_response)[7]) %>%
+#' text_tf_idf_out(., colnames(dummy_response)[1])
+#'
+#'
+text_tf_idf_out <- function(unnest_data, grouping_var){
   grouping_var <- prep_grouping_var(grouping_var)
 
-  tf_idf_out <- data %>%
+  tf_idf_out <- unnest_data %>%
     dplyr::count(!!grouping_var, word, sort = TRUE) %>%
     dplyr::group_by(!!grouping_var) %>%
     dplyr::mutate(total = sum(n)) %>%
@@ -19,7 +22,6 @@ text_tf_idf_out <- function(data, grouping_var){
            `term frequency` = n/total) %>%
     tidytext::bind_tf_idf(word, !!grouping_var, n) %>%
     dplyr::arrange(desc(tf_idf)) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(word = factor(word, levels = rev(unique(word))))
+    dplyr::ungroup()
   return(tf_idf_out)
 }
