@@ -20,7 +20,7 @@ survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
 
     # Save factor levels
     if(is.factor(column)){
-      col_levels <- c(levels(column), "Other (Aggregated)")
+      col_levels <- levels(column)
     }
 
     # Remove non-responses
