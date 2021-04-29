@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples text_unnest_remove_stem_words(dummy_response, colnames(dummy_response)[7], "words")
-text_unnest_remove_stem_words <- function(data, text_col, token = "words", custom_words = c("")){
+text_unnest_remove_stem_words <- function(data, text_col, token = "words", custom_words = c(""), ...){
   data %>%
     tidytext::unnest_tokens(output = word, input = text_col, token = token) %>%
     text_remove_words(., custom_words = custom_words) %>%
