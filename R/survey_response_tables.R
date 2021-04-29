@@ -16,8 +16,6 @@
 survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
   response_t <- list()
   for (i in colnames(dummy_response)){
-    i <- "Where are you based?"
-
     column <- dummy_response[, i]
 
     # Save factor levels
