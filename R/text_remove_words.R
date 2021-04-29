@@ -31,11 +31,11 @@ text_remove_words <- function(unnest_data, word_col = "word", stopwords = TRUE, 
   }
   # Remove number-only words?
   if(number_only){
-    data_out <- data_out[!(grepl('^[0-9]{1,}$', data_out[word_col]))]
+    data_out <- data_out[!(grepl('^[0-9]{1,}$', data_out[[word_col]])),]
   }
   # Remove custom word list?
   if(length(custom_words) > 0){
-    data_out <- data_out[!(data_out[word_col] %in% custom_words)]
+    data_out <- data_out[!(data_out[[word_col]] %in% custom_words),]
   }
 
   return(data_out)
