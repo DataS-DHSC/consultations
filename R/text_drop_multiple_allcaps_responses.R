@@ -20,10 +20,10 @@ text_drop_multiple_allcaps_responses <- function(data, text_col, max_cap = 3, ig
   data_removed <- gsub(regex_pattern, "", data[[text_col]])
 
   # Count number of all-caps words per response
-  num_allcaps <- stringr::str_count(data_removed, "(^| )[A-Z]+?( |$)")
+  num_allcaps <- stringr::str_count(data_removed, "\\b[A-Z]{3,}\\b")
 
   # Remove responses with too many capitalised words
-  data_dropped <- data[num_allcaps < max_cap,]
+  data_dropped <- data[num_allcaps <= max_cap,]
 
   return(data_dropped)
 }
