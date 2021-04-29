@@ -14,7 +14,7 @@
 #' @examples text_drop_keyword_responses(dummy_response, colnames(dummy_response)[7], 'malesuada')
 text_drop_keyword_responses <- function(data, text_col, keywords = c("insert_keywords")){
   # Turn keywords into regex pattern
-  regex_pattern <- paste0(" ", paste0(tolower(keywords), collapse = " | "), " ")
+  regex_pattern <- paste0("\\b(", paste0(tolower(keywords), collapse = "|"), ")\\b")
   # set text to lowercase
   match_text <- tolower(data[[text_col]])
 

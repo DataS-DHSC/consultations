@@ -15,7 +15,7 @@
 text_drop_multiple_allcaps_responses <- function(data, text_col, max_cap = 3, ignore_caps = c("NHS")){
   # Remove all-caps words to ignore
   # Turn to-be-ignored words into regex pattern
-  regex_pattern <- paste0(" ", paste0(ignore_caps, collapse = " | "), " ")
+  regex_pattern <- paste0("\\b(", paste0(ignore_caps, collapse = "|"), ")\\b")
   # Remove to-be-ignored words from original text
   data_removed <- gsub(regex_pattern, "", data[[text_col]])
 
