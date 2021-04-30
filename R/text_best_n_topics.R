@@ -14,5 +14,6 @@ text_best_n_topics <- function(data_dtm, k_opts){
 
   # Select the log Likelihood from each model, find the maximum value, and return the k-value for this
   best_k <- k_opts[which.max(unlist(lapply(lda_loop, `[`, 'logLik')))]
-  return(best_k)
+  return(list(lda_loop = lda_loop,
+              best_k = best_k))
 }
