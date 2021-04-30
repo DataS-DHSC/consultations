@@ -4,12 +4,12 @@
 \alias{text_tf_idf_out}
 \title{Calculate TF-IDF scores}
 \usage{
-text_tf_idf_out(data, grouping_var)
+text_tf_idf_out(unnest_data, grouping_var)
 }
 \arguments{
-\item{data}{pre-cleaned response data}
-
 \item{grouping_var}{column that groups each row. May be with (string) or without (tidy evaluation) quotation marks}
+
+\item{data}{pre-cleaned response data}
 }
 \value{
 dataframe with a row for each group-word combination, and the tf-idf score
@@ -18,5 +18,8 @@ dataframe with a row for each group-word combination, and the tf-idf score
 Calculate TF-IDF scores
 }
 \examples{
-text_tf_idf_out(text_unnest_remove_stem_words(dummy_response, colnames(dummy_response)[7], "words"), colnames(dummy_response)[1])
+tidytext::unnest_tokens(dummy_response, 'word', colnames(dummy_response)[7]) \%>\%
+text_tf_idf_out(., colnames(dummy_response)[1])
+
+
 }

@@ -8,7 +8,8 @@ text_unnest_remove_stem_words(
   data,
   text_col,
   token = "words",
-  custom_words = c("")
+  custom_words = c(""),
+  ...
 )
 }
 \arguments{

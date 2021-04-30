@@ -10,9 +10,11 @@
 #' gamma (gamma scores), and logLik (Log likelihood of topicmodel object)
 #' @export
 #'
-#' @examples text_dtm_prep(dummy_response, colnames(dummy_response)[7], 'response_id') %>%
-#' text_lda_dtm(., k = 5)
+#' @examples tidytext::unnest_tokens(dummy_response, 'word', colnames(dummy_response)[7]) %>%
+#' text_dtm_prep(., 'response_id') %>%
+#' text_lda_dtm(.[["dtm_prep"]], k = 5)
 text_lda_dtm <- function(data_dtm, k = 2, burnin = 1000, iter = 1000, keep = 50){
+  message(paste0("Modelling ", k, " topics."))
   lda_out <- topicmodels::LDA(data_dtm, k = k,
                               method = "Gibbs",
                               control = list(burnin = burnin,

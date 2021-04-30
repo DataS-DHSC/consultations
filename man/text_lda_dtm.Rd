@@ -25,6 +25,7 @@ gamma (gamma scores), and logLik (Log likelihood of topicmodel object)
 Calculate LDA topic model
 }
 \examples{
-text_dtm_prep(dummy_response, colnames(dummy_response)[7], 'response_id') \%>\%
-text_lda_dtm(., k = 5)
+tidytext::unnest_tokens(dummy_response, 'word', colnames(dummy_response)[7]) \%>\%
+text_dtm_prep(., 'response_id') \%>\%
+text_lda_dtm(.[["dtm_prep"]], k = 5)
 }

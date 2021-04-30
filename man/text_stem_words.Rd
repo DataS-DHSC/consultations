@@ -12,7 +12,7 @@ text_stem_words(unnest_data, word_col = "word")
 \item{word_col}{column name containing word tokens}
 }
 \value{
-dataframe with words replaced with their hunspell stemmed version
+dataframe with words replaced with their porter stemmed version
 }
 \description{
 Stem words before analysis
