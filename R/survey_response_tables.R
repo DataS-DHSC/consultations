@@ -50,7 +50,7 @@ survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
         dplyr::group_by(Response) %>%
         dplyr::summarise(Freq = sum(Freq)) %>%
         # With multi-choice, percentages can add up to more than 100 because individuals can answer multiple times
-        dplyr::mutate(Percentage = round(Freq / length(column) * 100, 2)) %>%
+        dplyr::mutate(Percentage = round(Freq / length(column) * 100, 1)) %>%
         dplyr::select(Response, Frequency = Freq, Percentage)
       } else {
         response_t[[i]] <- data.frame(Response = dummy_response[1, i], Freq = nrow(dummy_response), Percentage = 100)
