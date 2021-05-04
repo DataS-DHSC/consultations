@@ -16,7 +16,7 @@ survey_suppress_small_numbers <- function(column, min_n = 10){
   # Find values that appear fewer than n times
   rare_values <- names(which(table(column) < min_n))
   # Replace those values with "Other (Aggregated)"
-  column[column %in% rare_values] <- "Other (Aggregated)"
+  column[column[[1]] %in% rare_values, ] <- "Other (Aggregated)"
 
   return(column)
 }
