@@ -4,10 +4,12 @@
 \alias{survey_response_barplot}
 \title{Visualise responses}
 \usage{
-survey_response_barplot(dummy_response)
+survey_response_barplot(dummy_response, qtypes)
 }
 \arguments{
 \item{dummy_response}{dataframe}
+
+\item{qtypes}{list with elements categorical, multichoice, and freetext containing vectors of column names}
 }
 \value{
 list of ggplot2 objects
@@ -15,8 +17,8 @@ list of ggplot2 objects
 \description{
 Take a consultation response spreadsheet, and turn it into a barplot for each column.
 This uses the question_types() function to clean data first, including aggregating small categories and detecting free text columns.
-It then makes barplots on the basis of the frequency tables produced by response_tables().
+It then makes barplots on the basis of the frequency tables produced by survey_response_tables().
 }
 \examples{
-survey_response_barplot(dummy_response)
+survey_response_barplot(dummy_response, survey_question_types(dummy_response))
 }

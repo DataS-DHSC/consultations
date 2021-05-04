@@ -19,7 +19,7 @@ ethnicity <- c("White", "Mixed/Multiple ethnicities", "Asian/Asian British",
 contact <- c("Yes", "No", "")
 
 # For multi-select categorical questions, we will randomly combine from a topic list
-theme_opts <- c("TopicA", "Topic B", "TopicC ", "Topic D ", " Topic E")
+theme_opts <- c("TopicA", "Topic B", "TopicC", "Topic D", "Topic E")
 selection_length <- round(runif(rows, min = 0, max = length(theme_opts)))
 themes <- sapply(selection_length, FUN = function(x) paste(sample(theme_opts, size = x, replace = FALSE), collapse = ","))
 
@@ -38,7 +38,8 @@ dummy_response <- data.frame(respond = sample(respond, size = rows, replace = TR
                          ethnicity = sample(ethnicity, size = rows, replace = TRUE),
                          contact = sample(contact, size = rows, replace = TRUE),
                          themes = themes,
-                         free_text = free_text)
+                         free_text = free_text,
+                         response_id = seq(1, rows))
 # Set interpretable column names
 colnames(dummy_response) <- c("Are you completing this consultation as:",
                           "Where are you based?",
@@ -46,4 +47,5 @@ colnames(dummy_response) <- c("Are you completing this consultation as:",
                           "What is your ethnicity?",
                           "May we contact you via email about your response?",
                           "Which themes would you like to share your responses about?",
-                          "Please share your views on these themes:")
+                          "Please share your views on these themes:",
+                          "response_id")

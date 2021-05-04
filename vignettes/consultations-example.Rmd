@@ -32,13 +32,13 @@ Any questions that are multiple choice, and/or don't have too many free-text res
 First, the question_types() function can detect from some rules of thumb which columns are which question type. This function returns a list with three elements: categorical, multichoice, and freetext. Each element contains a vector of column names, containing the column names which fall into each group. 
 
 ```{r qtypes}
-question_types(dummy_response)
+survey_question_types(dummy_response)
 ```
 
 Second, based on these question types we can calculate appropriate frequency tables. For this, we can use the response_tables() function. This returns a list, with an element for each column (ie. an element for each question). This function, by default, aggregates any answers that have fewer than 5 responses to avoid statistical disclosure: you can set this yourself using the min_n parameter.
 
 ```{r response tables}
-response_tables(dummy_response, question_types(dummy_response), min_n = 5)
+survey_response_tables(dummy_response, survey_question_types(dummy_response), min_n = 5)
 ```
 
 Third, we can describe these frequency tables as a bar plot. The survey_response_barplot() function generates a list of ggplot objects, one for each question. This is indiscriminate about question type, so for free text questions it will simply return a "Free text" bar. 
@@ -52,6 +52,10 @@ survey_response_barplot(dummy_response)
 Finally, we can describe this same data using text bullet points: how many possible responses were there, what was the most common, and what was the least common. The summary_text() function takes the output from response_tables, but only one element at a time, so you have to run it as part of an lapply call. 
 
 ```{r summary text}
-lapply(response_tables(dummy_response, qtypes = question_types(dummy_response)), summary_text)
+lapply(survey_response_tables(dummy_response, qtypes = survey_question_types(dummy_response)), survey_summary_text)
 ```
+
+# Free text analysis
+
+If you have columns with free text, the quantitative options above will not return useful results. Instead, you can use the text_ set of functions provided in this package.
 
