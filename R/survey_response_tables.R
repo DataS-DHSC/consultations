@@ -19,9 +19,7 @@ survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
     column <- dummy_response[, i]
 
     # Save factor levels
-    if(is.factor(column)){
-      col_levels <- levels(column)
-    }
+    col_levels <- levels(column)
 
     # Remove non-responses
     column <- column[column != "" & !is.na(column)]
