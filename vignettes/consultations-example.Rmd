@@ -46,7 +46,7 @@ Third, we can describe these frequency tables as a bar plot. The survey_response
 This function can take the data directly, since it runs response_tables() under the hood. 
 
 ```{r barplots}
-survey_response_barplot(dummy_response)
+print(survey_response_barplot(dummy_response, survey_question_types(dummy_response)))
 ```
 
 Finally, we can describe this same data using text bullet points: how many possible responses were there, what was the most common, and what was the least common. The summary_text() function takes the output from response_tables, but only one element at a time, so you have to run it as part of an lapply call. 
