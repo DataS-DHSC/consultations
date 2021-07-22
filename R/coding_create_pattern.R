@@ -5,10 +5,10 @@
 #' @return regular expression string
 #' @export
 #'
-#' @examples coding_create_pattern(c('answer option 1', 'answer option 2'))
+#' @examples coding_create_pattern(c('answer option 1', 'answer (option 2)'))
 coding_create_pattern <- function(manifest){
   # Account for punctuation with regex meaning
-  man_improve <- gsub("\\(", "\\\\\\(", manifest)
-  man_improve <- gsub("\\)", "\\\\\\)", manifest)
+  man_improve <- gsub("(", "\\(", manifest, fixed = TRUE)
+  man_improve <- gsub(")", "\\)", man_improve, fixed = TRUE)
   paste0("(", paste0(man_improve, collapse = ")|("), ")")
 }
