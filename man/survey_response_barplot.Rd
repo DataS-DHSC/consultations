@@ -4,7 +4,7 @@
 \alias{survey_response_barplot}
 \title{Visualise responses}
 \usage{
-survey_response_barplot(dummy_response, qtypes)
+survey_response_barplot(dummy_response, qtypes, min_n = 10)
 }
 \arguments{
 \item{dummy_response}{dataframe}

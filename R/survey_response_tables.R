@@ -8,12 +8,13 @@
 #' @param dummy_response dataframe
 #' @param qtypes list with elements categorical, multichoice, and freetext containing vectors of column names
 #' @param min_n smallest group of answers allowed (statistical disclosure limit)
+#' @param round_dec number of decimal places to include in percentages
 #'
 #' @return list of tibbles
 #' @export
 #'
 #' @examples survey_response_tables(dummy_response, survey_question_types(dummy_response))
-survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
+survey_response_tables <- function(dummy_response, qtypes, min_n = 10, round_dec = 1){
   response_t <- list()
   for (i in colnames(dummy_response)){
     column <- dummy_response[, i]
@@ -48,7 +49,7 @@ survey_response_tables <- function(dummy_response, qtypes, min_n = 10){
         dplyr::group_by(Response) %>%
         dplyr::summarise(Freq = sum(Freq)) %>%
         # With multi-choice, percentages can add up to more than 100 because individuals can answer multiple times
-        dplyr::mutate(Percentage = round(Freq / length(column) * 100, 1)) %>%
+        dplyr::mutate(Percentage = round(Freq / length(column) * 100, round_dec)) %>%
         dplyr::select(Response, Frequency = Freq, Percentage)
       } else {
         response_t[[i]] <- data.frame(Response = dummy_response[1, i], Freq = nrow(dummy_response), Percentage = 100)

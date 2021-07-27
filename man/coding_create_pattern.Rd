@@ -16,5 +16,5 @@ regular expression string
 Create regex pattern from list of pre-set answer options
 }
 \examples{
-coding_create_pattern(c('answer option 1', 'answer option 2'))
+coding_create_pattern(c('answer option 1', 'answer (option 2)'))
 }

@@ -4,7 +4,7 @@
 \alias{survey_response_tables}
 \title{Extract and clean responses}
 \usage{
-survey_response_tables(dummy_response, qtypes, min_n = 10)
+survey_response_tables(dummy_response, qtypes, min_n = 10, round_dec = 1)
 }
 \arguments{
 \item{dummy_response}{dataframe}
@@ -12,6 +12,8 @@ survey_response_tables(dummy_response, qtypes, min_n = 10)
 \item{qtypes}{list with elements categorical, multichoice, and freetext containing vectors of column names}
 
 \item{min_n}{smallest group of answers allowed (statistical disclosure limit)}
+
+\item{round_dec}{number of decimal places to include in percentages}
 }
 \value{
 list of tibbles
