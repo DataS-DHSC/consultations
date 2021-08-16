@@ -13,7 +13,7 @@ text_stem_words <- function(unnest_data, word_col = "word", except = ""){
   stem_words <- SnowballC::wordStem(unnest_data[[word_col]])
 
   # Replace original words with stemmed words unless an exception
-  unnest_data[[word_col]] <- ifelse((is.na(stem_words) | unnest_data[[word_col]] %in% except), unnest_data[[word_col]], stem_words)
+  unnest_data[[word_col]] <- ifelse((is.na(stem_words) | unnest_data[[word_col]] %in% tolower(except)), unnest_data[[word_col]], stem_words)
 
   return(unnest_data)
 }
