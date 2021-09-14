@@ -27,5 +27,6 @@ Calculate LDA topic model
 \examples{
 tidytext::unnest_tokens(dummy_response, 'word', colnames(dummy_response)[7]) \%>\%
 text_dtm_prep(., 'response_id') \%>\%
-text_lda_dtm(.[["dtm_prep"]], k = 5)
+pluck(.,"dtm_prep") \%>\%
+text_lda_dtm(., k = 5)
 }
