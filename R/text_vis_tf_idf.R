@@ -1,6 +1,6 @@
 #' Visualise tf-idf output
 #'
-#' @param tfidf_data dataframe as produced by text_tf_idf_out function
+#' @param tfidf_data dataframe as produced by \code{\link{text_tf_idf_out}} function
 #' @param grouping_var a column name, with quotes (string) or without (tidyeval)
 #' @param top_n Top x number of words by tf-idf score
 #'
