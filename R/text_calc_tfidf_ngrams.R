@@ -5,9 +5,10 @@
 #'
 #' @param df A data frame with at least two free-text columns (i.e. questions).
 #' @param q_cols A vector containing the names of the free-text columns.
-#' @param ngrams_type A string. Should be "unigrams","bigrams" or "trigrams".
+#' @param ngram_type A string. Should be "unigrams","bigrams" or "trigrams".
 #' @param top_n_ngrams Integer. Number of top ngrams to return per question. Defaults to all.
-#' @param with_ties Should ties be kept together? The default, FALSE, may return less rows than you request.
+#' @param with_ties Should ties be kept together? The default, TRUE, may return more rows than you request.
+#' @param stop_words Stop words to be removed. Defaults to tidytext::stop_words$word
 #'
 #' @return A data frame with six columns: question name; n-gram (word, bigram or trigram); count;
 #'     term-frequency; inverse document frequency; and TF-IDF.
@@ -20,7 +21,8 @@ text_calc_tfidf_ngrams <- function(df,
                               q_cols,
                               ngram_type = c("unigrams", "bigrams", "trigrams"),
                               top_n_ngrams = NULL,
-                              with_ties = FALSE) {
+                              with_ties = TRUE,
+                              stop_words = tidytext::stop_words$word) {
 
   if(length(q_cols)==1){
     stop('q_cols needs to have at least two elements for tf-idf calculations')
@@ -54,7 +56,7 @@ text_calc_tfidf_ngrams <- function(df,
     dplyr::filter( # Do this because some stop words make it through the TF-IDF filtering that happens below.
       dplyr::across(
         dplyr::starts_with("word"),
-        ~ !. %in% tidytext::stop_words$word
+        ~ !. %in% stop_words
       )
     ) %>%
     tidyr::unite(

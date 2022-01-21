@@ -1,12 +1,12 @@
 #' Extract most common bigrams or trigrams
 #'
-#' For a vector of free-text consultation responses, return the most commonly used bigrams or trigrams.
+#' For a free-text column, return the most commonly used bigrams or trigrams.
 #'
 #' @param df A data frame with one free-text column.
 #' #' If your text is spread across several columns, you can merge them like this:
 #' df <- data.frame(text_col = unlist(df %>% select(question_cols))) %>% filter(!is.na(text_col))
 #' @param text_col_name A string containing the name of the free-text column.
-#' @param ngrams_type A string. Should be "bigrams" or "trigrams".
+#' @param ngram_type A string. Should be "bigrams" or "trigrams".
 #' @param min_freq Integer. Number of minimum count required for a ngram to be included in output. Defaults to 1.
 #'
 #' @return A data frame with two columns: n-gram (bigram or trigram); count.
