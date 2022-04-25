@@ -1,6 +1,6 @@
 #' Select best number of topics for LDA
 #'
-#' @param data_dtm Document-Term matrix as prepared by text_dtm_prep
+#' @param data_dtm Document-Term matrix as prepared by \code{\link{text_dtm_prep}}
 #' @param k_opts integer vector of numbers of topics to be considered
 #'
 #' @return single integer: best number of topics

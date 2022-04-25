@@ -7,7 +7,7 @@
 text_vis_tf_idf(tfidf_data, grouping_var, top_n = 10)
 }
 \arguments{
-\item{tfidf_data}{dataframe as produced by text_tf_idf_out function}
+\item{tfidf_data}{dataframe as produced by \code{\link{text_tf_idf_out}} function}
 
 \item{grouping_var}{a column name, with quotes (string) or without (tidyeval)}
 

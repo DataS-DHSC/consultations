@@ -7,7 +7,7 @@
 text_best_n_topics(data_dtm, k_opts)
 }
 \arguments{
-\item{data_dtm}{Document-Term matrix as prepared by text_dtm_prep}
+\item{data_dtm}{Document-Term matrix as prepared by \code{\link{text_dtm_prep}}}
 
 \item{k_opts}{integer vector of numbers of topics to be considered}
 }

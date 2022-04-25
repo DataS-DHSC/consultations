@@ -1,6 +1,6 @@
 #' Calculate LDA topic model
 #'
-#' @param data_dtm Document-Term matrix as prepared by text_dtm_prep
+#' @param data_dtm Document-Term matrix as prepared by \code{\link{text_dtm_prep}}
 #' @param k Number of topics to detect
 #' @param burnin parameter for Gibbs LDA
 #' @param iter parameter for Gibbs LDA

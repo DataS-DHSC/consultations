@@ -7,7 +7,7 @@
 text_lda_dtm(data_dtm, k = 2, burnin = 1000, iter = 1000, keep = 50)
 }
 \arguments{
-\item{data_dtm}{Document-Term matrix as prepared by text_dtm_prep}
+\item{data_dtm}{Document-Term matrix as prepared by \code{\link{text_dtm_prep}}}
 
 \item{k}{Number of topics to detect}
 
@@ -27,6 +27,5 @@ Calculate LDA topic model
 \examples{
 tidytext::unnest_tokens(dummy_response, 'word', colnames(dummy_response)[7]) \%>\%
 text_dtm_prep(., 'response_id') \%>\%
-pluck(.,"dtm_prep") \%>\%
-text_lda_dtm(., k = 5)
+text_lda_dtm(.[["dtm_prep"]], k = 5)
 }
